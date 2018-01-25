@@ -64,8 +64,8 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
           FEATURE_COUNT: 50
         };
     
-    params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
-    params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
+    params[params.version === '1.3.0' ? 'i' : 'x'] = Math.round(point.x);  //InvalidPoint on mobile bugfixed   point.x
+    params[params.version === '1.3.0' ? 'j' : 'y'] = Math.round(point.y);  //
     
     return this._url + L.Util.getParamString(params, this._url, true);
   },
