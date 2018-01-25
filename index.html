@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+
+Diese Datei illustriert als "Warnmodul2" die Darstellung der Warnungen des Deutschen Wetterdienstes als WMS-Dienst aus dem Server maps.dwd.de in einem JavaScript-basierten Web-mapping-Client.
+Verwendete Bestandteile:
+- als zentrales Element wird die JS-Bibliothek leaflet zur Erzeugung einer dynamsichen, interaktiven Karte in einem html-div-Element genutzt
+- die JS-Biblithek jQuery kommt für die Abfrage von Warninformationen via AJAX und JSONP zur Anwendung
+- das leaflet-Plugin BetterWMS wird für eine einfache GetFeatureInfo-Abfrage von Warndetails verwendet
+	https://gist.github.com/rclark/6908938	
+
+Leaflet bietet eine Vielzahl an Konfigurationsoptionen und Erweiterungen, welche unter https://leafletjs.com/ dokumentiert sind.
+Durch mögliche Einschränkungen von Zoom, Auschnitt und Interaktion sind auch örtlich gebundene Karten realisierbar. Des weiteren können alternative Hintergrundkarten, sowie zusätzliche Informationen aus anderen Diensten mit eingebunden werden.
+
+Weiterentwicklungen und Veränderungen des "Warnmodul2"-Codes sind ausdrücklich erwünscht, die Darstellung der DWD-Warnungen sollte allerdings immer in den original-Farben (https://www.dwd.de/DE/wetter/warnungen_aktuell/kriterien/farbskala.html?nn=605882) erfolgen. Eine eventuell duchgeführte Filterung von Warnungen sollte für Nutzer entsprechend ersichtlich sein.
+Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne unter opendata@dwd.de entgegen um sie der Allgemeinheit verfügbar zu machen.
+
+-->
+
+<head>
+	<title>DWD - Warnmodul 2</title>
+	<meta charset="utf-8" />
+
+	<!-- Leaflet JavaScript Bibliothek für interaktive Karten -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" crossorigin=""></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" crossorigin=""/>
+
+    <!-- jquery für ajax-Anfragen
+	<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script> -->
+	
+	<!-- BetterWMS stellt vereinfachte getFeatureInfo-Abfragen für WMS-Layer bereit; alternativ kann z.B. https://github.com/heigeo/leaflet.wms oder eigener Code verwendet werden
+	Die Funktionen wurden angepasst, um JSONP-Anfragen durchzuführen und ausgewählte Elemente der Feature-Info im Popup darzustellen; Änderungen sind in leaflet-betterwms.js entsprechen markiert
+	-->
+	<script src="./leaflet-betterwms_dj.js"></script>
+
+</head>
+<body>
+
+<!-- hier wird der Kartencontainer definiert, in welchem anschließend die Karte dargestellt wird -->
+<div id="kartencontainer" style="width: 800px; height: 600px;"></div>
+
+
+<script>
+	// Leaflet-Kartenobjekt im referenzierten div erstellen und initiale Optionen für Karte übergeben
+	var karte = L.map('kartencontainer', {
+		// Mittelpunkt der Karte als Breiten- und Längengrad, bspw. 50.0956° N, 8.7761° E für Offenbach
+		center: [50.0956, 8.7761],
+		// initiales Zoomlevel
+		zoom: 7, 
+		// interaktivität der Karte kann mit Optionen gesteuert werden
+		zoomControl: true,
+		dragging: true,
+		attributionControl: true
+	});
+
+	// OSM-Hintergrundslayer definieren
+	var osmlayer =  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: 'Map data: &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+		maxZoom: 18
+	});
+
+	// Warnungs-Layer vom DWD-Geoserver - betterWms fügt Möglichkeiten zur GetFeatureInfo hinzu
+	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/geoproxy_warnungen/service/", {
+		layers: 'Warnungen_Gemeinden_vereinigt',
+		// eigene Styled Layer Descriptor (SLD) können zur alternativen Anzeige der Warnungen genutzt werden (https://docs.geoserver.org/stable/en/user/styling/sld/reference/)
+		//sld: 'https://eigenerserver/alternativer.sld',
+		format: 'image/png',
+		transparent: true,
+		opacity: 0.8,
+		attribution: 'Warndaten: &copy; <a href="https://www.dwd.de">DWD</a>'
+	});
+
+	// CQL_FILTER können benutzt werden um angezeigte Warnungen zu filtern (https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html)
+	// Filterung kann auf Basis der verschiedenen properties der Warnungen erfolgen (bspw. EC_II, EC_GROUP, DESCRIPTION ... ) siehe https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/einbindung_karten_geowebservice.pdf
+ 	// warnlayer.setParams({CQL_FILTER:"DESCRIPTION LIKE '%Sturm%'"});
+ 	// Filter können zur Laufzeit, z.B. über Nutzereingaben angepasst werden
+ 	//delete warnlayer.wmsParams.CQL_FILTER;
+ 	//warnlayer.redraw();
+
+ 	// Layer mit neutraler Darstellung der Gemeinde-Warngebiete
+	var gemeindelayer = L.tileLayer.wms("https://maps.dwd.de/geoproxy_warnungen/service/", {
+		layers: 'Warngebiete_Gemeinden',
+		format: 'image/png',
+		styles: '',
+		transparent: true,
+		opacity: 0.6,
+		attribution: 'Geobasisdaten Gemeinden: &copy; <a href="https://www.bkg.de">BKG</a> 2015 (Daten verändert)'
+	});
+
+	// Layerlisten für die Layercontrol erstellen und dabei initial aktive Layer zur Karte hinzufügen
+	var baseLayers = {
+			"OpenStreetMap": osmlayer.addTo(karte)
+	};
+	var overLayers = {
+			"<span title='DWD Geoserver dwd:Warnungen_Gemeinden_vereinigt'>Gemeinde vereinigt</span>": warnlayer.addTo(karte),
+			"<span title='DWD Geoserver Gemeindewarngebiete'>Warngebiete (Gemeinden)</span>": gemeindelayer
+	};
+
+	// Layercontrol-Element erstellen und hinzufügen
+    L.control.layers(baseLayers, overLayers).addTo(karte);
+
+	// Demo-Marker mit Popup hinzufügen
+	var marker = L.marker([50.099444, 8.770833]).addTo(karte);
+	marker.bindPopup("<b>Deutscher Wetterdienst</b><br>Wetter und Klima aus einer Hand").openPopup();
+</script>
+
+</body>
+</html>
