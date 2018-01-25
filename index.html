@@ -40,10 +40,11 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 <body>
 
 <!-- hier wird der Kartencontainer definiert, in welchem anschließend die Karte dargestellt wird -->
-<div id="kartencontainer" style="width: 800px; height: 600px;"></div>
+<div id="kartencontainer" style="width: 98vw; height: 100vh;"></div>  <!-- width: 800px; height: 600px; -->
 
 
 <script>
+	var tID;  //timer
 	// Leaflet-Kartenobjekt im referenzierten div erstellen und initiale Optionen für Karte übergeben
 	var karte = L.map('kartencontainer', {
 		// Mittelpunkt der Karte als Breiten- und Längengrad, bspw. 50.0956° N, 8.7761° E für Offenbach
@@ -105,6 +106,8 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	// Demo-Marker mit Popup hinzufügen
 	var marker = L.marker([50.099444, 8.770833]).addTo(karte);
 	marker.bindPopup("<b>Deutscher Wetterdienst</b><br>Wetter und Klima aus einer Hand").openPopup();
+	
+	marker.on('move', function(e){clearTimeout(tID); tID=setTimeout(function(){warnlayer.getFeatureInfoJsonp({latlng:e.latlng})}, 300000)});  //
 </script>
 
 </body>
