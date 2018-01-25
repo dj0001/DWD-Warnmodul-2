@@ -14,23 +14,9 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     L.TileLayer.WMS.prototype.onRemove.call(this, map);
     map.off('click', this.getFeatureInfoJsonp, this);
   },
-/*  
-  getFeatureInfo: function (evt) {
-    // Make an AJAX request to the server and hope for the best
-    var url = this.getFeatureInfoUrl(evt.latlng),
-        showResults = L.Util.bind(this.showGetFeatureInfo, this);
-    $.ajax({
-      url: url,
-      success: function (data, status, xhr) {
-        var err = typeof data === 'string' ? null : data;
-        showResults(err, evt.latlng, data);
-      },
-      error: function (xhr, status, error) {
-        showResults(error);  
-      }
-    });
-  },
-*/  
+
+  //getFeatureInfo: function (evt) {  //removed
+
   // Warnmodul2: JSONP-Version der getFeatureInfo-Funktion
   getFeatureInfoJsonp: function (evt) {
     // Make an AJAX request to the server and hope for the best
@@ -83,30 +69,23 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     
     return this._url + L.Util.getParamString(params, this._url, true);
   },
-/*  
-  showGetFeatureInfo: function (err, latlng, content) {
-    if (err) { console.log(err); return; } // do nothing if there's an error
-    console.log("showGetFeatureInfo: " + content);
-    // Otherwise show the content in a popup, or something.
-    L.popup({ maxWidth: 800})
-      .setLatLng(latlng)
-      .setContent(content)
-      .openOn(this._map);
-  },
-*/
+
+  //showGetFeatureInfo: function (err, latlng, content) {  //removed
 
   // Warnmodul2: angepasste Funktion zum Aufbereiten der Geoserver-Antwort (Auswahl von bestimmten properties) und zur Anzeige als Popup
-  showGetFeatureInfoJson: function (latlng, data) {console.log(data)
+  showGetFeatureInfoJson: function (latlng, data) {
     if ( data.features[0] == null ) { return 0 };
     var content="<h2>Amtliche Warnung</h2>";
+    var color={Minor:"yellow",Moderate:"orange",Severe:"red",Extreme:"DarkRed"}  //
     data.features.forEach(function(item){  //$.each(data.features, function (i, item) {
             var o = new Date(item.properties.ONSET);
             var e = new Date(item.properties.EXPIRES);
             onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr";
             end = ('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + ". - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
-            content += "<p><table><tr><td>Ereignis:</td><td><b>" + item.properties.EVENT + "</b></td></tr>";
-            content += "<tr><td>Beginn:</td><td>" + onset + "</td></tr>";
-            content += "<tr><td>Ende:</td><td>" + end + "</td></tr></table></p>";
+            content += "<p><table style='background: no-repeat 15px 75%/30px url(\"icons/"+item.properties.EC_GROUP.replace(/;.*/,'')+".png\"), "+color[item.properties.SEVERITY]+" no-repeat left/contain url(\"icons/warn.png\"); border-spacing:0px'>"
+            content += "<tr><td style='padding-right:3px'>Ereignis :</td><td style='background:white'><b><a style='text-decoration:none' href='?" + item.properties.EVENT + "'>" + item.properties.EVENT + "</a></b></td></tr>";
+            content += "<tr><td>Beginn:</td><td style='background:white'>" + onset + "</td></tr>";
+            content += "<tr><td>Ende:</td><td style='background:white'>" + end + "</td></tr></table></p>";
             //content += "Gesendet: " + item.properties.SENT + "</p>";
     });
     content += "<a target='blank' href='https://www.dwd.de/warnungen'>www.dwd.de/warnungen</a>";
