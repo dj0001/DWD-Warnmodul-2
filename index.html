@@ -123,6 +123,23 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
   
   karte.locate({setView: true, maxZoom: 8});  //Standortabfrage
   karte.on('locationfound', function(e){warnlayer.getFeatureInfoJsonp(e)})
+
+//more addons
+function showNotification(tx) {
+  Notification.requestPermission(function(result) {
+    if (result === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification('Vibration Sample', {
+          body: 'Buzz! '+tx,
+          icon: 'icons/warn.png',
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'vibration-sample'
+        });
+      });
+    }
+  });
+}
+if(typeof(Notification) != "undefined") Notification.requestPermission();  //
 </script>
 
 </body>
