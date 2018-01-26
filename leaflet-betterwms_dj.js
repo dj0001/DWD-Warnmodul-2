@@ -34,7 +34,14 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     //fetch(url).then(function(response) {response.json().then(function(data) {showResultsJson(evt.latlng, data)}) })
     var xhr = new XMLHttpRequest()
     xhr.open("GET", url, true)
-    xhr.onload = function() {showResultsJson(evt.latlng, JSON.parse(this.response))}
+    xhr.onload = function() {var data=JSON.parse(this.response); showResultsJson(evt.latlng, data)
+     if(data.features.length){  //add notification
+     var severity=["Minor","Moderate","Severe","Extreme"], warnlev=decodeURI(location.search.slice(1));
+     if(isNaN(warnlev)?
+     data.features.map(function(obj){return obj.properties.EVENT}).some(function(x){return (warnlev.split(",").indexOf(x)+1)}) :   //querystringparameter ?ereignis e.g. ?GLÄTTE
+     data.features.map(function(obj){return obj.properties.SEVERITY}).some(function(x){return (severity.indexOf(x) >= warnlev)}))  //  ?warnlevel e.g. ?1
+     showNotification(data.features.length)}
+    }
     xhr.send()   
   },
 
