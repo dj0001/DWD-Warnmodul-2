@@ -94,9 +94,18 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	var baseLayers = {
 			"OpenStreetMap": osmlayer.addTo(karte)
 	};
+		var satlayer = L.tileLayer.wms("https://maps.dwd.de/geoserver/dwd/wms/", {
+		layers: 'dwd:SAT_EU_central_RGB_cloud',  //GefuehlteTemp
+		format: 'image/png',
+		styles: '',
+		transparent: true,
+		opacity: 0.6,
+		attribution: 'Satellitenbild METEOSAT (RGB) Europa Zentral: &copy; <a href="http://www.dwd.de">DWD</a>'
+	});
 	var overLayers = {
 			"<span title='DWD Geoserver dwd:Warnungen_Gemeinden_vereinigt'>Gemeinde vereinigt</span>": warnlayer.addTo(karte),
-			"<span title='DWD Geoserver Gemeindewarngebiete'>Warngebiete (Gemeinden)</span>": gemeindelayer
+			"<span title='DWD Geoserver Gemeindewarngebiete'>Warngebiete (Gemeinden)</span>": gemeindelayer,
+			"<span title='Satellitenbild METEOSAT'>Satellitenbild</span>": satlayer
 	};
 
 	// Layercontrol-Element erstellen und hinzufügen
