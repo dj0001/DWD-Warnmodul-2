@@ -125,6 +125,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
   karte.on('locationfound', function(e){warnlayer.getFeatureInfoJsonp(e)})
 
 //more addons
+navigator.serviceWorker.register('sw.js');
 function showNotification(tx) {
   Notification.requestPermission(function(result) {
     if (result === 'granted') {
