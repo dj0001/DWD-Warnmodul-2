@@ -125,7 +125,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
   karte.on('locationfound', function(e){warnlayer.getFeatureInfoJsonp(e)})
 
 //more addons
-navigator.serviceWorker.register('sw.js');
+if(navigator.serviceWorker) navigator.serviceWorker.register('sw.js');
 function showNotification(tx) {
   Notification.requestPermission(function(result) {
     if (result === 'granted') {
@@ -141,6 +141,30 @@ function showNotification(tx) {
   });
 }
 if(typeof(Notification) != "undefined") Notification.requestPermission();  //
+
+	L.Control.Watermark = L.Control.extend({  //image for geocode (OpenStreetMap)
+		onAdd: function(map) {
+			var img = L.DomUtil.create('img');
+			img.src = 'icons/search.png';
+			img.style.background = 'white';
+			
+			L.DomEvent.on(img, 'click', this._geocode, this);  //handler
+			L.DomEvent.disableClickPropagation(img)
+			
+			return img;
+		},
+		_geocode: function(ev) {
+		  var q = prompt("Ort", ""); if (q) {
+		    fetch("https://nominatim.openstreetmap.org/search?q=" + q + "&format=json&limit=1")
+		      .then(function(response) {
+		        response.json().then(function(data) { var e={lat:data[0].lat,lng:data[0].lon};karte.setView(e);warnlayer.getFeatureInfoJsonp({latlng:e}) })
+		      })
+		  }
+		}
+		//, onRemove: function(map) { }   // Nothing to do here
+	});
+	L.control.watermark = function(opts) {return new L.Control.Watermark(opts)}
+	L.control.watermark({ position: 'bottomright' }).addTo(karte)
 </script>
 
 </body>
