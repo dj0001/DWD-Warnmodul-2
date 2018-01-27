@@ -118,8 +118,11 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	
 	//addons DJ
   var tID; marker.on('move', function(e){clearTimeout(tID); tID=setTimeout(function(){warnlayer.getFeatureInfoJsonp({latlng:e.latlng})}, 300000)});  //
-  var t0=Date.now(); setInterval(function(){if(Date.now()-t0>=3*300000) {t0=Date.now(); warnlayer.setUrl("https://maps.dwd.de/geoserver/dwd/wms/?" + Math.random());
-   karte.attributionControl.setPrefix(new Date().toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"}))}}, 300000)  //update alle 5 min
+  var t0=Date.now(); setInterval(function(){update()}, 300000)  //update alle 5 min
+  document.addEventListener("visibilitychange", function(){if(!document.hidden) update()}, false);
+
+  function update() {if(Date.now()-t0>=3*300000) {t0=Date.now(); warnlayer.setUrl("https://maps.dwd.de/geoserver/dwd/wms/?" + Math.random());
+   karte.attributionControl.setPrefix(new Date().toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"}))}}
   
   karte.locate({setView: true, maxZoom: 8});  //Standortabfrage
   karte.on('locationfound', function(e){warnlayer.getFeatureInfoJsonp(e)})
