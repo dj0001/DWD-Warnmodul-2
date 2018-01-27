@@ -15,3 +15,4 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?1 for Moderate
 ## Changelog
 26.01. add Notification    
 26.01. add Geocode (click on search icon)    
+27.01. add legend ℹ
