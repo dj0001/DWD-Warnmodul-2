@@ -10,7 +10,7 @@ add filter querystringparameter ?EVENT e.g. ?STURMBÖEN
 Demo https://dj0001.github.io/DWD-Warnmodul-2/?STURMB%C3%96EN    
 
 add Notification querystringparameter ?warnlevel e.g. ?1    
-Demo https://dj0001.github.io/DWD-Warnmodul-2/?1 for Moderate
+Demo https://dj0001.github.io/DWD-Warnmodul-2/?1 for > Minor
 
 ## Changelog
 26.01. add Notification    
