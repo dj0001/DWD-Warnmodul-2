@@ -81,7 +81,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
 
   // Warnmodul2: angepasste Funktion zum Aufbereiten der Geoserver-Antwort (Auswahl von bestimmten properties) und zur Anzeige als Popup
   showGetFeatureInfoJson: function (latlng, data) {
-    marker.unbindPopup(); marker.setLatLng(latlng)  //feedback
+    marker.unbindPopup();marker.closePopup(); marker.setLatLng(latlng)  //feedback
     if ( data.features[0] == null ) { return 0 };
     var content="<h2>Amtliche Warnung</h2>";
     var color={Minor:"yellow",Moderate:"orange",Severe:"red",Extreme:"DarkRed"}  //
@@ -98,10 +98,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     });
     content += "<a target='blank' href='https://www.dwd.de/warnungen'>www.dwd.de/warnungen</a>";
 
-    L.popup({ maxWidth: 800})
-      .setLatLng(latlng)
-      .setContent(content)
-      .openOn(this._map);
+    marker.bindPopup(content,{ maxWidth: 800}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
   }
 });
 
