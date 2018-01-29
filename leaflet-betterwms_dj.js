@@ -17,7 +17,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
 
   //getFeatureInfo: function (evt) {  //removed
 
-  // Warnmodul2: JSONP-Version der getFeatureInfo-Funktion
+  // Warnmodul2: JSON-Version der getFeatureInfo-Funktion  //P
   getFeatureInfoJsonp: function (evt) {
     // Make an AJAX request to the server and hope for the best
     var url = this.getFeatureInfoUrl(evt.latlng),
@@ -36,7 +36,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     xhr.open("GET", url, true)
     xhr.onload = function() {var data=JSON.parse(this.response); showResultsJson(evt.latlng, data)
      if(data.features.length){  //add notification
-     var severity=["Minor","Moderate","Severe","Extreme"], warnlev=decodeURI(location.search.slice(1));
+     var severity=["Minor","Moderate","Severe","Extreme"], warnlev=qs  //decodeURI(location.search.slice(1));
      if(isNaN(warnlev)?
      data.features.map(function(obj){return obj.properties.EVENT}).some(function(x){return (warnlev.split(",").indexOf(x)+1)}) :   //querystringparameter ?ereignis e.g. ?GLÄTTE
      data.features.map(function(obj){return obj.properties.SEVERITY}).some(function(x){return (severity.indexOf(x) >= warnlev)}))  //  ?warnlevel e.g. ?1
