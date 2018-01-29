@@ -76,7 +76,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	// CQL_FILTER können benutzt werden um angezeigte Warnungen zu filtern (https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html)
 	// Filterung kann auf Basis der verschiedenen properties der Warnungen erfolgen (bspw. EC_II, EC_GROUP, DESCRIPTION ... ) siehe https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/einbindung_karten_geowebservice.pdf
  	// warnlayer.setParams({CQL_FILTER:"DESCRIPTION LIKE '%Sturm%'"});
- 	var tmp=decodeURI(location.search.slice(1)); if(isNaN(tmp)) warnlayer.setParams({CQL_FILTER:"EVENT IN ('"+tmp.replace(/,/g,"','")+"')"})  //
+ 	var qs=decodeURI(location.search.slice(1)); if(isNaN(qs) &&!qs.match(/^ort=/)) warnlayer.setParams({CQL_FILTER:"EVENT IN ('"+qs.replace(/,/g,"','")+"')"})  //
 	// Filter können zur Laufzeit, z.B. über Nutzereingaben angepasst werden
  	//delete warnlayer.wmsParams.CQL_FILTER;
  	//warnlayer.redraw();
@@ -128,9 +128,6 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
    img.src="https://maps.dwd.de/geoserver/wms?REQUEST=GetLegendGraphic&version=1.3&format=image/png&width=20&height=20&layer=dwd:Warnungen_Gemeinden";
   document.querySelector("#kartencontainer").parentNode.insertBefore(img,document.querySelector("#kartencontainer").nextSibling)}
     
-  karte.locate({setView: true, maxZoom: 8});  //Standortabfrage
-  karte.on('locationfound', function(e){warnlayer.getFeatureInfoJsonp(e)})
-
 //more addons
 if(navigator.serviceWorker) navigator.serviceWorker.register('sw.js');
 function showNotification(tx) {
@@ -155,13 +152,13 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
     img.src = 'icons/search.png';
     img.style.background = 'white';
 
-    L.DomEvent.on(img, 'click', this._geocode, this); //handler
+    L.DomEvent.on(img, 'click', function(){this._geocode()}, this); //handler
     L.DomEvent.disableClickPropagation(img)
 
     return img;
   },
-  _geocode: function(ev) {
-      var q = prompt("Ort", "");
+  _geocode: function(ort) {
+      var q = ort||prompt("Ort", "");
       if (q) {
         fetch("https://nominatim.openstreetmap.org/search?q=" + q + "&format=json&limit=1")
           .then(function(response) {
@@ -175,7 +172,10 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
     //, onRemove: function(map) { }   // Nothing to do here
 });
 L.control.watermark = function(opts) {return new L.Control.Watermark(opts)}
-L.control.watermark({position: 'bottomright'}).addTo(karte)
+var geo=L.control.watermark({position: 'bottomright'}).addTo(karte)
+
+  if(isNaN(qs) &&qs.match(/^ort=/)) geo._geocode(qs.slice(4)); else karte.locate({setView: true, maxZoom: 8});  //Standortabfrage
+  karte.on('locationfound', function(e){warnlayer.getFeatureInfoJsonp(e)})
 
 karte.attributionControl.setPrefix('<a href="javascript:void(0)" onclick="legend()">&#x24d8;</a>')
  function legend(){ var img=document.createElement("img");
