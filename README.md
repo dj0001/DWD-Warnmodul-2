@@ -3,7 +3,7 @@ show weather alerts from Deutscher Wetterdienst
 [Demo](https://dj0001.github.io/DWD-Warnmodul-2/)
 
 removed jquery (use json), add icons, update marker and map, location request, add satlayer    
-*Read this in other languages: [Deutsch](README.de.md)
+*Read this in other languages: [Deutsch](README.de.md)*
 
 ## API
 
