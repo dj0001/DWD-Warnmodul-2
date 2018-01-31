@@ -119,11 +119,14 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	//marker.bindPopup("<b>Deutscher Wetterdienst</b><br>Wetter und Klima aus einer Hand").openPopup();
 	
 	//addons DJ
-  var tID; warnlayer._marker.on('move', function(e){clearTimeout(tID); tID=setTimeout(function(){warnlayer.getFeatureInfoJsonp({latlng:e.latlng})}, 300000)});  //
-  var t0=Date.now(); setInterval(function(){update()}, 300000)  //add update alle 5 min
+var auto=300  //update-interval in s (alle 5 min; 2e6 no-updates)  //edit here
+
+  auto=Math.max(300,auto); auto*=1000
+  var tID; warnlayer._marker.on('move', function(e){clearTimeout(tID); tID=setTimeout(function(){warnlayer.getFeatureInfoJsonp({latlng:e.latlng})}, auto)});  //
+  var t0=Date.now(); setInterval(function(){update()}, auto)  //add update alle 5 min
   document.addEventListener("visibilitychange", function(){if(!document.hidden) update()}, false);
   
-  function update() {if(Date.now()-t0>=3*300000) {t0=Date.now(); warnlayer.setUrl("https://maps.dwd.de/geoserver/dwd/wms/?" + Math.random());
+  function update() {if(Date.now()-t0>=3*auto) {t0=Date.now(); warnlayer.setUrl("https://maps.dwd.de/geoserver/dwd/wms/?" + Math.random());
    karte.attributionControl.setPrefix(new Date().toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"}))}}
   
 //more addons
