@@ -22,4 +22,4 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 26.01. add Geocode (click on search icon)    
 27.01. add legend ⓘ    
 29.01. add parameter ort    
-30.01. without global variables ([beta](https://dj0001.github.io/DWD/new/index_enc.html))
+30.01. without global variables
