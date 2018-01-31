@@ -6,6 +6,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     //   Register a click listener, then do all the upstream WMS things
     L.TileLayer.WMS.prototype.onAdd.call(this, map);
     map.on('click', this.getFeatureInfoJsonp, this);
+    this._marker = L.marker([50.099444, 8.770833]).addTo(this._map)  //Marker hinzufügen
   },
   
   onRemove: function (map) {
@@ -35,12 +36,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     var xhr = new XMLHttpRequest()
     xhr.open("GET", url, true)
     xhr.onload = function() {var data=JSON.parse(this.response); showResultsJson(evt.latlng, data)
-     if(data.features.length){  //add notification
-     var severity=["Minor","Moderate","Severe","Extreme"], warnlev=qs  //decodeURI(location.search.slice(1));
-     if(isNaN(warnlev)?
-     data.features.map(function(obj){return obj.properties.EVENT}).some(function(x){return (warnlev.split(",").indexOf(x)+1)}) :   //querystringparameter ?ereignis e.g. ?GLÄTTE
-     data.features.map(function(obj){return obj.properties.SEVERITY}).some(function(x){return (severity.indexOf(x) >= warnlev)}))  //  ?warnlevel e.g. ?1
-     showNotification(data.features.length)}
+     /* if(data.features.length){  //add notification */
     }
     xhr.send()   
   },
@@ -81,7 +77,8 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
 
   // Warnmodul2: angepasste Funktion zum Aufbereiten der Geoserver-Antwort (Auswahl von bestimmten properties) und zur Anzeige als Popup
   showGetFeatureInfoJson: function (latlng, data) {
-    marker.closePopup();marker.unbindPopup(); marker.setLatLng(latlng)  //feedback
+    this._data=data  //needed for notification
+    this._marker.closePopup();this._marker.unbindPopup(); this._marker.setLatLng(latlng)  //feedback
     if ( data.features[0] == null ) { return 0 };
     var content="<h2>Amtliche Warnung</h2>";
     var color={Minor:"yellow",Moderate:"orange",Severe:"red",Extreme:"DarkRed"}  //
@@ -98,7 +95,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     });
     content += "<a target='blank' href='https://www.dwd.de/warnungen'>www.dwd.de/warnungen</a>";
 
-    marker.bindPopup(content,{ maxWidth: 800}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
+    this._marker.bindPopup(content,{ maxWidth: 800}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
   }
 });
 
