@@ -183,7 +183,7 @@ L.control.watermark = function(opts) {return new L.Control.Watermark(opts)}
 var geo=L.control.watermark({position: 'bottomright'}).addTo(karte)  //add geocode
 
   if(isNaN(qs) &&qs.match(/^ort=/)) {geo._geocode(qs.slice(4)); qs=''} else karte.locate({setView: true, maxZoom: 8});  //add Standortabfrage
-  karte.on('locationfound', function(e){warnlayer.getFeatureInfoJsonp(e)})
+  karte.on('locationfound', function(e){console.log(e.latitude+","+e.longitude); warnlayer.getFeatureInfoJsonp(e)})
 
 karte.attributionControl.setPrefix('<a href="javascript:void(0)" id="legend">&#x24d8;</a>')  //add legend
 document.getElementById("legend").addEventListener("click", function (){ var img=document.createElement("img");
