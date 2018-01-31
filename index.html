@@ -185,7 +185,7 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
 L.control.watermark = function(opts) {return new L.Control.Watermark(opts)}
 var geo=L.control.watermark({position: 'bottomright'}).addTo(karte)  //add geocode
 
-  if(isNaN(qs) &&qs.match(/^ort=/)) {geo._geocode(qs.slice(4)); qs=''} else karte.locate({setView: true, maxZoom: 8});  //add Standortabfrage
+  if(isNaN(qs) &&qs.match(/^ort=/)) {geo._geocode(qs.slice(4)); qs=''} else if(qs!=="0") karte.locate({setView: true, maxZoom: 8});  //add Standortabfrage
   karte.on('locationfound', function(e){console.log(e.latitude+","+e.longitude); warnlayer.getFeatureInfoJsonp(e)})
 
 karte.attributionControl.setPrefix('<a href="javascript:void(0)" id="legend">&#x24d8;</a>')  //add legend
