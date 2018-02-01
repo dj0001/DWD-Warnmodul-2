@@ -154,7 +154,7 @@ function showNotification(tx) {
     }
   });
 }
-if(typeof(Notification) != "undefined") Notification.requestPermission();  //
+if(typeof(Notification) != "undefined" &&qs!=="4") Notification.requestPermission();  //
 
 
 L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
