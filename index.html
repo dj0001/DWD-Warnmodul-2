@@ -64,7 +64,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 		maxZoom: 18
 	});
 
-	var qs=decodeURI(location.search.slice(1)); 
+	var qs=decodeURI(location.search.slice(1));  //URL parameter
 	// Warnungs-Layer vom DWD-Geoserver - betterWms fügt Möglichkeiten zur GetFeatureInfo hinzu
 	var warnlayer = L.tileLayer.betterWms(isNaN(qs)? "https://maps.dwd.de/geoserver/dwd/wms/":"https://maps.dwd.de/geoproxy_warnungen/service/", {  //
 		layers: 'Warnungen_Gemeinden_vereinigt',
