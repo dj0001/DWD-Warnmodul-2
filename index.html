@@ -142,7 +142,7 @@ warnlayer._marker.on('move', function(e){ var data=warnlayer._data
 
 if(navigator.serviceWorker) navigator.serviceWorker.register('sw.js');
 function showNotification(tx) {
-  Notification.requestPermission(function(result) {
+  if(typeof(Notification) != "undefined") Notification.requestPermission(function(result) {
     if (result === 'granted') {
       navigator.serviceWorker.ready.then(function(registration) {
         registration.showNotification('DWD', {
