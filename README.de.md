@@ -9,8 +9,8 @@ jquery entfernt (json verwenden), Symbole hinzufügen, Markierung und Karte aktu
 Filter querystringparameter hinzufügen ?EVENT e.g. ?STURMBÖEN    
 Demo https://dj0001.github.io/DWD-Warnmodul-2/?STURMB%C3%96EN    
 
-Benachrichtigungsquerstringparameter hinzufügen ?warnlevel e.g. ?1 (?4 keine Benachrichtigung)    
-Demo https://dj0001.github.io/DWD-Warnmodul-2/?1 for > Minor
+Benachrichtigungsquerstringparameter hinzufügen ?warnlevel e.g. ?2 (?5 keine Benachrichtigung)    
+Demo https://dj0001.github.io/DWD-Warnmodul-2/?2 for ≥ Moderate
 
 Stadtquerystringparameter hinzufügen ?ort=<city> e.g. ?ort=Augsburg    
 Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg    
@@ -18,6 +18,6 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 ## Changelog
 26.01. Benachrichtigung hinzufügen    
 26.01. Geokode hinzufügen (Klick auf Suchsymbol)    
-27.01. Legende hinzufügen ⓘ    
+27.01. Legende hinzufügen ⌄    
 29.01. Parameter ort hinzufügen    
 31.01. Parameter hinzufügen ?0 keine Geolocation
