@@ -123,7 +123,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 var auto=300  //update-interval in s (alle 5 min; 2e6 no-updates)  //edit here
 
   auto=Math.max(300,auto); auto*=1000
-  var tID; warnlayer._marker.on('move', function(e){clearTimeout(tID); tID=setTimeout(function(){warnlayer.getFeatureInfoJsonp({latlng:e.latlng})}, auto)});  //
+  var tID; warnlayer._marker.on('move', function(e){clearTimeout(tID); tID=setTimeout(function(){qs==1?karte.locate({setView:true, maxZoom:8}):warnlayer.getFeatureInfoJsonp({latlng:e.latlng})}, auto)});  //?1 watch location
   var t0=Date.now(); setInterval(function(){update()}, auto)  //add update alle 5 min
   document.addEventListener("visibilitychange", function(){if(!document.hidden) update()}, false);
   
