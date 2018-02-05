@@ -191,6 +191,7 @@ var geo=L.control.watermark({position: 'bottomright'}).addTo(karte)  //add geoco
   if(isNaN(qs) &&qs.match(/^ort=/)) {qs=qs.slice(4); if(qs.match(/^[\d,-\.]+$/)) warnlayer.getFeatureInfoJsonp({latlng: qs.split(",")});  //?ort=48.37,10.9
    else geo._geocode(qs); qs=''} else if(qs!=="0") karte.locate({setView: true, maxZoom: 8});  //add geolocation
   karte.on('locationfound', function(e){console.log(e.latitude+","+e.longitude); warnlayer.getFeatureInfoJsonp(e)})
+  karte.on('locationerror', function(e){if(qs==1) setTimeout(function(){karte.locate({setView:true, maxZoom:8})}, auto); else console.log(e)})  //
 
 karte.attributionControl.setPrefix('<a href="javascript:void(0)" id="legend">&#x2304;</a>')  //add legend &#x24d8;
 document.getElementById("legend").addEventListener("click", function (){ var img=document.createElement("img");
