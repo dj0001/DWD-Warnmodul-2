@@ -11,7 +11,7 @@ removed jquery (use json), add icons, update marker and map, location request, a
 add filter querystringparameter ?EVENT e.g. ?STURMBÖEN    
 Demo https://dj0001.github.io/DWD-Warnmodul-2/?STURMB%C3%96EN    
 
-add Notification querystringparameter ?warnlevel e.g. ?1 (?5 no-notification)    
+add Notification querystringparameter ?warnlevel e.g. ?2 (?5 no-notification)    
 Demo https://dj0001.github.io/DWD-Warnmodul-2/?2 for ≥ Moderate
 
 add city querystringparameter ?ort=<city> e.g. ?ort=Augsburg    
