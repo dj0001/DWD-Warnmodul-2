@@ -66,8 +66,8 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 
 	var qs=decodeURI(location.search.slice(1));  //URL parameter
 	// Warnungs-Layer vom DWD-Geoserver - betterWms fügt Möglichkeiten zur GetFeatureInfo hinzu
-	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/"+ (isNaN(qs)? "geoserver/dwd/wms/":"geoproxy_warnungen/service/"), {  //
-		layers: 'Warnungen_Gemeinden_vereinigt',
+	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/geoproxy_warnungen/service/", {  //https://maps.dwd.de/geoserver/dwd/wms/
+		layers: 'Warnungen_Gemeinden_vereinigt'+(isNaN(qs) &&!qs.match(/^ort=/) && qs.match(/[a-z]/)? '_'+qs:''),  // Filterung
 		// eigene Styled Layer Descriptor (SLD) können zur alternativen Anzeige der Warnungen genutzt werden (https://docs.geoserver.org/stable/en/user/styling/sld/reference/)
 		//sld: 'https://eigenerserver/alternativer.sld',
 		format: 'image/png',
@@ -79,7 +79,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	// CQL_FILTER können benutzt werden um angezeigte Warnungen zu filtern (https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html)
 	// Filterung kann auf Basis der verschiedenen properties der Warnungen erfolgen (bspw. EC_II, EC_GROUP, DESCRIPTION ... ) siehe https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/einbindung_karten_geowebservice.pdf
  	// warnlayer.setParams({CQL_FILTER:"DESCRIPTION LIKE '%Sturm%'"});
- 	if(isNaN(qs) &&!qs.match(/^ort=/)) warnlayer.setParams({CQL_FILTER:"EVENT IN ('"+qs.replace(/,/g,"','")+"')"})  //
+ 	//if(isNaN(qs) &&!qs.match(/^ort=/)) warnlayer.setParams({CQL_FILTER:"EVENT IN ('"+qs.replace(/,/g,"','")+"')"})  //"EC_GROUP LIKE '%"+qs+"%'"
 	// Filter können zur Laufzeit, z.B. über Nutzereingaben angepasst werden
  	//delete warnlayer.wmsParams.CQL_FILTER;
  	//warnlayer.redraw();
@@ -137,7 +137,7 @@ warnlayer._marker.on('move', function(e){ var data=warnlayer._data
      if(data.features.length){  //add notification
      var severity=["Minor","Moderate","Severe","Extreme"], warnlev=qs  //decodeURI(location.search.slice(1));
      if(isNaN(warnlev)?
-     data.features.map(function(obj){return obj.properties.EVENT}).some(function(x){return (warnlev.split(",").indexOf(x)+1)}) :   //querystringparameter ?ereignis e.g. ?GLÄTTE
+     data.features.map(function(obj){return obj.properties.EC_GROUP}).some(function(x){return (x.match(warnlev))}) :   //.EVENT warnlev.split(",").indexOf(x)+1  //querystringparameter ?EC_GROUP e.g. ?GLAZE
      data.features.map(function(obj){return obj.properties.SEVERITY}).some(function(x){return (severity.indexOf(x) >= warnlev-1)}))  //  ?warnlevel e.g. ?1
      showNotification(data.features.length)}
 })
