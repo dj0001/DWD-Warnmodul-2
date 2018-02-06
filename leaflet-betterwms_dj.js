@@ -88,7 +88,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
             onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr";
             end = ('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + ". - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
             content += "<p><table style='background: no-repeat 15px 75%/30px url(\"icons/"+item.properties.EC_GROUP.replace(/;.*/,'')+".png\"), "+color[item.properties.SEVERITY]+" no-repeat left/contain url(\"icons/warn.png\"); border-spacing:0px'>"
-            content += "<tr><td style='padding-right:3px'>Ereignis :</td><td style='background:white'><b><a style='text-decoration:none' href='?" + item.properties.EVENT + "'>" + item.properties.EVENT + "</a></b></td></tr>";
+            content += "<tr><td style='padding-right:3px'>Ereignis :</td><td style='background:white'><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT + "</a></b></td></tr>";  //.EVENT
             content += "<tr><td>Beginn:</td><td style='background:white'>" + onset + "</td></tr>";
             content += "<tr><td>Ende:</td><td style='background:white'>" + end + "</td></tr></table></p>";
             //content += "Gesendet: " + item.properties.SENT + "</p>";
