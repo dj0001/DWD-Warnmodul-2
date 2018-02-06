@@ -8,8 +8,8 @@ removed jquery (use json), add icons, update marker and map, location request, a
 
 ## API
 
-add filter querystringparameter ?EVENT e.g. ?STURMBÖEN    
-Demo https://dj0001.github.io/DWD-Warnmodul-2/?STURMB%C3%96EN    
+add filter querystringparameter ?EC_GROUP e.g. ?Frost    
+Demo https://dj0001.github.io/DWD-Warnmodul-2/?Frost    
 
 add Notification querystringparameter ?warnlevel e.g. ?2 (?5 no-notification)    
 Demo https://dj0001.github.io/DWD-Warnmodul-2/?2 for ≥ Moderate
