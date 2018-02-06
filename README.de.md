@@ -6,8 +6,8 @@ jquery entfernt (json verwenden), Symbole hinzufügen, Markierung und Karte aktu
 
 ## API
 
-Filter querystringparameter hinzufügen ?EVENT e.g. ?STURMBÖEN    
-Demo https://dj0001.github.io/DWD-Warnmodul-2/?STURMB%C3%96EN    
+Filter querystringparameter hinzufügen ?EC_GROUP e.g. ?Frost [Gewitter|Sturm|Regen|Schnee|Frost|Glatteis|Tauwetter|Nebel|Hitze]    
+Demo https://dj0001.github.io/DWD-Warnmodul-2/?Frost    
 
 Benachrichtigungsquerstringparameter hinzufügen ?warnlevel e.g. ?2 (?5 keine Benachrichtigung)    
 Demo https://dj0001.github.io/DWD-Warnmodul-2/?2 for ≥ Moderate
