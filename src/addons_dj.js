@@ -25,7 +25,7 @@ warnlayer._marker.on('move', function(e){ var data=warnlayer._data
      showNotification(data.features.length)}
 })
 
-if(navigator.serviceWorker) navigator.serviceWorker.register('sw.js');
+if(navigator.serviceWorker) navigator.serviceWorker.register('src/sw.js');
 function showNotification(tx) {
   if(typeof(Notification) != "undefined") Notification.requestPermission(function(result) {
     if (result === 'granted') {
