@@ -26,5 +26,5 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 31.01. add parameter ?0 no-geolocation
 
 ## License
-Copyright (c) 2018, dj0001    
+Copyright © 2018, dj0001    
 [BSD 2-Clause](https://opensource.org/licenses/BSD-2-Clause)
