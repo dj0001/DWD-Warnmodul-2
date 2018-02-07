@@ -47,7 +47,7 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
   onAdd: function(map) {
     var img = L.DomUtil.create('img');
     img.src = 'icons/search.png'; ; img.alt="search"
-    img.style.background = 'white';
+    img.setAttribute("class", "leaflet-control-layers")
 
     L.DomEvent.on(img, 'click', function(){this._geocode()}, this); //handler
     L.DomEvent.disableClickPropagation(img)
