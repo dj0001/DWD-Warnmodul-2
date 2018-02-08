@@ -6,7 +6,7 @@ self.addEventListener('notificationclick', function(event) {
   // focuses if it is
   event.waitUntil(clients.matchAll({
     type: "window"
-  }).then(function(clientList) {  //console.log(clientList)
+  }).then(function(clientList) {  console.log(event)
     for (var i = 0; i < clientList.length; i++) {
       var client = clientList[i];
       if (client.url == 'https://dj0001.github.io/DWD-Warnmodul-2/' && 'focus' in client)
