@@ -27,7 +27,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 31.01. add parameter ?0 no-geolocation, ?1 watch-geo
 
 ## License
-Copyright © warndata, <a href="https://dwd.de">DWD<img src="https://www.dwd.de/SiteGlobals/StyleBundles/Bilder/favicon.ico?__blob=normal" alt="DWD" /></a>    
+Copyright © warndata, <a href="https://dwd.de">DWD<img src="https://www.dwd.de/SiteGlobals/StyleBundles/Bilder/favicon.ico?__blob=normal" alt="DWD" target="_dwd" /></a>    
 
 Copyright © 2018, dj0001    
 [BSD 2-Clause](https://opensource.org/licenses/BSD-2-Clause)
