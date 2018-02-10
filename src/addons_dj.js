@@ -16,13 +16,13 @@ var auto=300  //update-interval in s (alle 5 min; 2e6 no-updates)  //edit here
     karte.attributionControl.setPrefix(tmp +new Date().toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"}) +'</a>')}}
   
 //more addons
-warnlayer._marker.on('move', function(e){ var data=warnlayer._data
+var dt=0; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
      if(data.features.length){  //add notification
      var severity=["Minor","Moderate","Severe","Extreme"], warnlev=qs  //decodeURI(location.search.slice(1));
      if(isNaN(warnlev)?
      data.features.map(function(obj){return obj.properties.EC_GROUP}).some(function(x){return (x.match(warnlev))}) :   //.EVENT warnlev.split(",").indexOf(x)+1  //querystringparameter ?EC_GROUP e.g. ?GLAZE
-     data.features.map(function(obj){return obj.properties.SEVERITY}).some(function(x){return (severity.indexOf(x) >= warnlev-1)}))  //  ?warnlevel e.g. ?1
-     showNotification(data.features.length)}
+     data.features.map(function(obj){return obj.properties.SEVERITY}).some(function(x){return (severity.indexOf(x) >= warnlev-1+dt)}))  //  ?warnlevel e.g. ?1
+     {showNotification(data.features.length); dt++}} else dt=0;  //dt reduces noti
 })
 
 if(navigator.serviceWorker) navigator.serviceWorker.register('sw.js');
