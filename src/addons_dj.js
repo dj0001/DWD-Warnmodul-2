@@ -10,7 +10,7 @@ var auto=300  //update-interval in s (alle 5 min; 2e6 no-updates)  //edit here
   var t0=Date.now(); setInterval(function(){update()}, 3*auto)  //add update
   document.addEventListener("visibilitychange", function(){if(!document.hidden) {update();if(Date.now()-t1>=auto) updatem({latlng:warnlayer._marker.getLatLng()})}}, false);
   
-  function update() {if(Date.now()-t0>=3*auto && !document.hidden) {t0=Date.now(); warnlayer.setUrl("https://maps.dwd.de/geoserver/dwd/wms/?" + Math.random());
+  function update() {if(Date.now()-t0>=3*auto && !document.hidden) {t0=Date.now(); warnlayer.setUrl("https://maps.dwd.de/geoproxy_warnungen/service/?" + Math.random());
    var tmp='<a href="#" onclick=\'navigator.share({title:"DWD", url:"?ort='+Object.values(warnlayer._marker.getLatLng())+'"})\'>'  //Chrome android
    if(!navigator.share) tmp='<a href="https://raw.githubusercontent.com/dj0001/DWD-Warnmodul-2/master/README.de.md" target="_rd">'  // i
     karte.attributionControl.setPrefix(tmp +new Date().toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"}) +'</a>')}}
