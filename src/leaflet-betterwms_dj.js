@@ -70,7 +70,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     params[params.version === '1.3.0' ? 'i' : 'x'] = Math.round(point.x);  //InvalidPoint on mobile bugfixed   point.x
     params[params.version === '1.3.0' ? 'j' : 'y'] = Math.round(point.y);  //
     
-    return this._url + L.Util.getParamString(params, this._url, true);
+    return "https://maps.dwd.de/geoserver/dwd/wms/" + L.Util.getParamString(params, this._url, true);  //this._url  don't use proxy here
   },
 
   //showGetFeatureInfo: function (err, latlng, content) {  //removed
