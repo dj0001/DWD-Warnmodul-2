@@ -62,7 +62,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
           query_layers: this.wmsParams.layers,
           info_format: 'application/json',  //text/javascript
           // Warnmodul2: nur ausgewählte Properties werden abgefragt - eine ungefilterte Antwort liefert eine Vielzahl weiterer Eigenschaften der Warnungen, analog zum Inhalt im CAP-Format
-          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP',  //,SEVERITY,EC_GROUP ?
+          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP,SENT',  //,SEVERITY,EC_GROUP
           // Warnmodul2: FEATURE_COUNT > 1 notwendig, um im Falle überlappender Warnungen alle Warnungen abzufragen
           FEATURE_COUNT: 50
         };
@@ -93,7 +93,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
             content += "<tr><td>Ende:</td><td style='background:white'>" + end + "</td></tr></table></p>";
             //content += "Gesendet: " + item.properties.SENT + "</p>";
     });
-    content += "<a target='blank' href='https://www.dwd.de/warnungen'>www.dwd.de/warnungen</a>";
+    content += new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"})+" <a target='dwd' href='https://www.dwd.de/warnungen'>DWD</a>";
 
     this._marker.bindPopup(content,{ maxWidth: 800}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
   }
