@@ -90,7 +90,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
             content += "<p><table style='background: no-repeat 15px 75%/30px url(\"icons/"+item.properties.EC_GROUP.replace(/;.*/,'')+".png\"), "+color[item.properties.SEVERITY]+" no-repeat left/contain url(\"icons/warn.png\"); border-spacing:0px'>"
             content += "<tr><td style='padding-right:3px'>Ereignis :</td><td style='background:white'><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT + "</a></b></td></tr>";  //.EVENT
             content += "<tr><td>Beginn:</td><td style='background:white'>" + onset + "</td></tr>";
-            content += "<tr><td>Ende:</td><td style='background:white'>" + end + "</td></tr></table></p>";
+            content += "<tr><td>Ende:</td><td style='background:white;"+(Date.now()-o<0?"color:#808080":"")+"'>" + end + "</td></tr></table></p>";
             //content += "Gesendet: " + item.properties.SENT + "</p>";
     });
     content += "<a target='dwd' href='https://www.dwd.de/warnungen'>dwd.de</a> "+new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"});
