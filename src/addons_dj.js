@@ -55,8 +55,8 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
     return img;
   },
   _geocode: function(ort) {
-      var q = ort||prompt("Ort", (localStorage||{}).def||"");
-      if (q) {
+      var q = ort||prompt("Ort (0 = \u2316)", (localStorage||{}).def||"");
+      if (q) { if(q==0) {karte.locate({setView:true, maxZoom:8}); return}  //locateMe
         fetch("https://nominatim.openstreetmap.org/search?q=" + q + "&format=json&limit=1")
           .then(function(response) {
             response.json().then(function(data) {var e = [data[0].lat,data[0].lon];
