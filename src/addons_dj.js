@@ -55,13 +55,14 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
     return img;
   },
   _geocode: function(ort) {
-      var q = ort||prompt("Ort", "");
+      var q = ort||prompt("Ort", (localStorage||{}).def||"");
       if (q) {
         fetch("https://nominatim.openstreetmap.org/search?q=" + q + "&format=json&limit=1")
           .then(function(response) {
             response.json().then(function(data) {var e = [data[0].lat,data[0].lon];
               karte.setView(e);
               warnlayer.getFeatureInfoJsonp({latlng: e})
+	      localStorage.def=q  //favorite
             })
           })
       }
