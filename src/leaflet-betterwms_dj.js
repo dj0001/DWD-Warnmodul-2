@@ -93,7 +93,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
             content += "<tr><td>Ende:</td><td style='background:white'>" + end + "</td></tr></table></p>";
             //content += "Gesendet: " + item.properties.SENT + "</p>";
     });
-    content += new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"})+" <a target='dwd' href='https://www.dwd.de/warnungen'>DWD</a>";
+    content += "<a target='dwd' href='https://www.dwd.de/warnungen'>dwd.de</a> "+new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"});
 
     this._marker.bindPopup(content,{ maxWidth: 800}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
   }
