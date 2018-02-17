@@ -55,7 +55,7 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
     return img;
   },
   _geocode: function(ort) {
-      var q = ort||prompt("Ort (0 = \u2316)", (localStorage||{}).def||"");
+      var q = ort||prompt((navigator.language=="de"?"Ort":"location")+" (0 = \u2316)", (localStorage||{}).def||"");
       if (q) { if(q==0) {karte.locate({setView:true, maxZoom:8}); return}  //locateMe
         fetch("https://nominatim.openstreetmap.org/search?q=" + q + "&format=json&limit=1")
           .then(function(response) {
@@ -81,6 +81,6 @@ karte.attributionControl.setPrefix('<a href="javascript:void(0)" id="legend">&#x
 document.getElementById("legend").addEventListener("click", function (){ var img=document.createElement("img");
   img.src="https://maps.dwd.de/geoserver/wms?REQUEST=GetLegendGraphic&version=1.3&format=image/png&width=20&height=20&layer=dwd:Warnungen_Gemeinden";
   document.querySelector("#kartencontainer").parentNode.insertBefore(img,document.querySelector("#kartencontainer").nextSibling)
- karte.attributionControl.setPrefix("") } )
+ karte.attributionControl.setPrefix('<a href="#" onclick=\'document.querySelector("#kartencontainer").webkitRequestFullScreen()\'>\u26F6</a>') } )  //
 
 })();
