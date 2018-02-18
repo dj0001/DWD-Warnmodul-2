@@ -81,6 +81,6 @@ karte.attributionControl.setPrefix('<a href="javascript:void(0)" id="legend">&#x
 document.getElementById("legend").addEventListener("click", function (){ var img=document.createElement("img");
   img.src="https://maps.dwd.de/geoserver/wms?REQUEST=GetLegendGraphic&version=1.3&format=image/png&width=20&height=20&layer=dwd:Warnungen_Gemeinden";
   document.querySelector("#kartencontainer").parentNode.insertBefore(img,document.querySelector("#kartencontainer").nextSibling)
- karte.attributionControl.setPrefix('<a href="#" onclick=\'document.querySelector("#kartencontainer").webkitRequestFullScreen()\'>\u26F6</a>') } )  //
+ karte.attributionControl.setPrefix('<a href="#" onclick=\'var el=document.querySelector("#kartencontainer");(el.requestFullScreen||el.webkitRequestFullScreen).apply(el)\'>\u26F6</a>') } )  //
 
 })();
