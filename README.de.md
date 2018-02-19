@@ -20,4 +20,4 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 26.01. Geokode hinzufügen (Klick auf Suchsymbol)    
 27.01. Legende hinzufügen ⌄    
 29.01. Parameter ort hinzufügen    
-31.01. Parameter hinzufügen ?0 keine Geolocation
+31.01. Parameter hinzufügen ?0 keine Geolocation, ?1 beobachte geo
