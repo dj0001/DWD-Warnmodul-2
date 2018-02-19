@@ -26,7 +26,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 30.01. without global variables    
 31.01. add parameter ?0 no-geolocation, ?1 watch-geo    
 16.02. add more locations [beta](https://dj0001.github.io/DWD/new/index_multi.html)    
-18.02. without map [beta](https://dj0001.github.io/DWD/new/index_womap.html)    
+18.02. without map [beta](https://dj0001.github.io/DWD/new/index_womap.html?1)    
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
 ## License
