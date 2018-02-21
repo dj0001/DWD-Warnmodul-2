@@ -60,7 +60,7 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
         fetch("https://nominatim.openstreetmap.org/search?q=" + q + "&format=json&limit=1")
           .then(function(response) {
             response.json().then(function(data) {var e = [data[0].lat,data[0].lon];
-              karte.setView(e);
+              karte.setView(e,6,{animate:false});
               warnlayer.getFeatureInfoJsonp({latlng: e})
 	      localStorage.def=q  //favorite
             })
@@ -72,7 +72,7 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
 L.control.watermark = function(opts) {return new L.Control.Watermark(opts)}
 var geo=L.control.watermark({position: 'bottomright'}).addTo(karte)  //add geocode
 
-  if(isNaN(qs) &&qs.match(/^ort=/)) {qs=qs.slice(4); if(qs.match(/^[\d,-\.]+$/)) warnlayer.getFeatureInfoJsonp({latlng: qs.split(",")});  //?ort=48.37,10.9
+  if(isNaN(qs) &&qs.match(/^ort=/)) {qs=qs.slice(4); if(qs.match(/^[\d,-\.]+$/)) {karte.setView(e,6,{animate:false}); warnlayer.getFeatureInfoJsonp({latlng: qs.split(",")})}  //?ort=48.37,10.9
    else geo._geocode(qs); qs=''} else if(qs!=="0") karte.locate({setView: true, maxZoom: 8});  //add geolocation
   karte.on('locationfound', function(e){console.log(e.latitude+","+e.longitude); warnlayer.getFeatureInfoJsonp(e)})
   karte.on('locationerror', function(e){if(qs==1) setTimeout(function(){karte.locate({setView:true, maxZoom:8})}, auto); else console.log(e)})  //
