@@ -82,6 +82,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     if ( data.features[0] == null ) { return 0 };
     var content="<h2>Amtliche Warnung</h2>";
     var color={Minor:"yellow",Moderate:"orange",Severe:"red",Extreme:"DarkRed"}  //
+    data.features.sort(function(a, b){return new Date(a.properties.ONSET) - new Date(b.properties.ONSET)});  //sort array
     data.features.forEach(function(item){  //$.each(data.features, function (i, item) {
             var o = new Date(item.properties.ONSET);
             var e = new Date(item.properties.EXPIRES);
