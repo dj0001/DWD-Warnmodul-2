@@ -6,7 +6,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     //   Register a click listener, then do all the upstream WMS things
     L.TileLayer.WMS.prototype.onAdd.call(this, map);
     map.on('click', this.getFeatureInfoJsonp, this);
-    this._marker = L.marker([50.099444, 8.770833]).addTo(this._map)  //Marker hinzufügen
+    if(!this._marker) this._marker = L.marker([50.099444, 8.770833]).addTo(this._map)  //Marker hinzufügen
   },
   
   onRemove: function (map) {
