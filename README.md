@@ -28,6 +28,8 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 16.02. add more locations [beta](https://dj0001.github.io/DWD/new/index_multi.html)    
 18.02. without map [beta](https://dj0001.github.io/DWD/new/index_womap.html?1)    
 28.02. structured data [beta](https://search.google.com/structured-data/testing-tool#url=https%3A%2F%2Fdj0001.github.io%2FDWD%2Fnew%2Findex_st.html%3Fort%3DAugsburg)    
+01.03. add Binnenseen    
+&nbsp;&nbsp;.04. add Pollenflug    
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
 ## License
