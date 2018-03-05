@@ -89,7 +89,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
             onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr";
             end = (td?"Ende :":(('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + "."))+" - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
             content += "<p><table style='background: no-repeat 15px 75%/30px url(\"icons/"+item.properties.EC_GROUP.replace(/;.*/,'')+".png\"), "+color[item.properties.SEVERITY]+" no-repeat left/contain url(\"icons/warn.png\"); border-spacing:0px'>"
-            content += "<tr><td style='padding-right:3px'>Ereignis :</td><td style='background:white'><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT + "</a></b></td></tr>";  //.EVENT
+            content += "<tr><td style='padding-right:3px'>Ereignis :</td><td style='background:white'><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT.replace("RMATION","") + "</a></b></td></tr>";  //.EVENT
             content += "<tr><td></td><td style='background:white;"+(Date.now()-o<0?"color:#808080":"")+"'>" + onset + "</td></tr>";  //Beginn:
             content += "<tr><td></td><td style='background:white'>" + (item.properties.EXPIRES?end:"&nbsp;") + "</td></tr></table></p>";  //Ende:
             //content += "Gesendet: " + item.properties.SENT + "</p>";
