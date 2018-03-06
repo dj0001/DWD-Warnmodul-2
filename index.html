@@ -91,7 +91,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 		styles: '',
 		transparent: true,
 		opacity: 0.6,
-		attribution: 'Geobasisdaten Gemeinden: &copy; <a href="https://www.bkg.de">BKG</a> 2015 (Daten verändert)'
+		attribution: 'Geobasisdaten Gemeinden: &copy; <a href="https://www.bkg.bund.de">BKG</a> 2015 (Daten verändert)'
 	});
 
 	// Layerlisten für die Layercontrol erstellen und dabei initial aktive Layer zur Karte hinzufügen
@@ -114,8 +114,8 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 		opacity: 0.6
 	});
 	var overLayers = {
-			"<span title='DWD Geoserver dwd:Warnungen_Gemeinden_vereinigt'>Gemeinde vereinigt</span>": warnlayer.addTo(karte),
-			"<span title='DWD Geoserver Gemeindewarngebiete'>Warngebiete (Gemeinden)</span>": gemeindelayer,
+			"<span title='DWD Geoserver dwd:Warnungen_Gemeinden_vereinigt'>Warnungen einblenden</span>": warnlayer.addTo(karte),
+			"<span title='DWD Geoserver Gemeindewarngebiete'>Gemeindegrenzen</span>": gemeindelayer,
 			"<span title='Satellitenbild METEOSAT'>Satellitenbild</span>": satlayer
 		        , "<span title='Warnungen_Binnenseen und Küste'>Warnungen_Binnenseen</span>": seenlayer
 	};
