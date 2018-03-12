@@ -88,11 +88,11 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
         var e = new Date(item.properties.EXPIRES); var td=(e.toDateString()==o.toDateString());
         onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr";
         end = (td?"Ende :":(('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + "."))+" - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
-        content += "<p><table" 
+        content += "<table"  //<p>
         + " style='background: no-repeat 15px 75%/30px url(\"icons/"+item.properties.EC_GROUP.replace(/;.*/,'')+".png\"), no-repeat left/contain url(\"icons/warn.png\"), linear-gradient(to right, "+color[item.properties.SEVERITY]+" 54px,white 54px); border-spacing:0px'"
         + "><tr><td>Ereignis :</td><td style='background:white'><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT.replace("RMATION","") + "</a></b></td></tr>"  //.EVENT
         + "<tr><td></td><td"+(Date.now()-o<0?" style='color:#808080'":"")+">" + onset + "</td></tr>"  //Beginn:
-        + "<tr><td></td><td>" + (item.properties.EXPIRES?end:"&nbsp;") + "</td></tr></table></p>";  //Ende:
+        + "<tr><td></td><td>" + (item.properties.EXPIRES?end:"&nbsp;") + "</td></tr></table><p></p>";  //Ende:
         //content += "Gesendet: " + item.properties.SENT + "</p>";
     });
     content += "<a target='dwd' href='https://www.dwd.de/warnungen'>dwd.de</a> "+new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"});
