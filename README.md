@@ -30,6 +30,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 28.02. structured data [beta](https://search.google.com/structured-data/testing-tool#url=https%3A%2F%2Fdj0001.github.io%2FDWD%2Fnew%2Findex_st.html%3Fort%3DAugsburg)    
 01.03. add Binnenseen    
 13.03. add alternative [themes](https://github.com/dj0001/DWD/tree/gh-pages/new/themes)    
+17.03. full configurable background [beta](https://dj0001.github.io/DWD/new/index_txtimg.html)    
 &nbsp;&nbsp;.04. add Pollenflug    
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
