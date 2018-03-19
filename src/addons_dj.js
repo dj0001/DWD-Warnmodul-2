@@ -45,8 +45,8 @@ if(typeof(Notification) != "undefined" &&qs!=="5") Notification.requestPermissio
 
 L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
   onAdd: function(map) {
-    var img = L.DomUtil.create('img');
-    img.src = 'icons/search.png'; ; img.alt="search"
+    var img = L.DomUtil.create('input');  //img
+    img.src = 'icons/search.png'; img.alt="search"; img.type= "image"
     img.setAttribute("class", "leaflet-control-layers")
 
     L.DomEvent.on(img, 'click', function(){this._geocode()}, this); //handler
