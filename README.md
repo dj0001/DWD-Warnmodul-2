@@ -31,7 +31,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 01.03. add Binnenseen    
 13.03. add alternative [themes](https://github.com/dj0001/DWD/tree/gh-pages/new/themes)    
 17.03. full configurable background [release](https://dj0001.github.io/DWD/new/index_txtimg.html)    
-30.03. [alternative](https://dj0001.github.io/DWD/new/index_meteo.html) icons (from [meteoalarm](https://meteoalarm.eu/))    
+31.03. add parameter filter ?6 tomorrow    
 &nbsp;&nbsp;.04. add Pollenflug    
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
