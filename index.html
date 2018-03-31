@@ -66,7 +66,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 
 	var qs=decodeURI(location.search.slice(1));  //URL parameter
 	// Warnungs-Layer vom DWD-Geoserver - betterWms fügt Möglichkeiten zur GetFeatureInfo hinzu
-	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/geoproxy_warnungen/service/", {  //https://maps.dwd.de/geoserver/dwd/wms/
+	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/"+(qs!=6?"geoproxy_warnungen/service/":"geoserver/dwd/wms/"), {
 		layers: 'Warnungen_Gemeinden_vereinigt'+(isNaN(qs) &&!qs.match(/^ort=/) && qs.match(/[a-z]|UV/)? '_'+qs:''),  // Filterung
 		// eigene Styled Layer Descriptor (SLD) können zur alternativen Anzeige der Warnungen genutzt werden (https://docs.geoserver.org/stable/en/user/styling/sld/reference/)
 		//sld: 'https://eigenerserver/alternativer.sld',
@@ -80,6 +80,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	// Filterung kann auf Basis der verschiedenen properties der Warnungen erfolgen (bspw. EC_II, EC_GROUP, DESCRIPTION ... ) siehe https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/einbindung_karten_geowebservice.pdf
  	// warnlayer.setParams({CQL_FILTER:"DESCRIPTION LIKE '%Sturm%'"});
  	//if(isNaN(qs) &&!qs.match(/^ort=/)) warnlayer.setParams({CQL_FILTER:"EVENT IN ('"+qs.replace(/,/g,"','")+"')"})  //"EC_GROUP LIKE '%"+qs+"%'"
+	if(qs==6) warnlayer.setParams({CQL_FILTER:"EXPIRES AFTER "+new Date(new Date().setUTCHours(24,0,0)).toISOString()})  //?6 tomorrow
 	// Filter können zur Laufzeit, z.B. über Nutzereingaben angepasst werden
  	//delete warnlayer.wmsParams.CQL_FILTER;
  	//warnlayer.redraw();
