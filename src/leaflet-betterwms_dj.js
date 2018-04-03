@@ -76,7 +76,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
   //showGetFeatureInfo: function (err, latlng, content) {  //removed
 
   // Warnmodul2: angepasste Funktion zum Aufbereiten der Geoserver-Antwort (Auswahl von bestimmten properties) und zur Anzeige als Popup
-  showGetFeatureInfoJson: function (latlng, data) {
+  showGetFeatureInfoJson: function (latlng, data) {  var newstyle=true  //false edit here
     this._data=data  //needed for notification
     this._marker.closePopup();this._marker.unbindPopup(); this._marker.setLatLng(latlng)  //feedback
     if ( data.features[0] == null ) { return 0 };
@@ -88,11 +88,16 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
         var e = new Date(item.properties.EXPIRES); var td=(e.toDateString()==o.toDateString());
         onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr";
         end = (td?"Ende :":(('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + "."))+" - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
-        content += "<table"  //<p>
-        + " style='background: no-repeat 15px 75%/30px url(\"icons/"+item.properties.EC_GROUP.replace(/;.*/,'')+".png\"), no-repeat left/contain url(\"icons/warn.png\"), linear-gradient(to right, "+color[item.properties.SEVERITY]+" 54px,transparent 54px); border-spacing:0px'"
+        content += "<div style='position: relative;'>"  //
+        if(newstyle) content += "<div style='position: absolute;top: 0px;left: 0px'><svg width=56 height=56 viewBox=\"0 0 64 64\"><polygon points=\"30,4 4,60 60,60\" stroke-linejoin=\"round\" style=\"fill:none;stroke:"+color[item.properties.SEVERITY]+";stroke-width:5\" /></svg></div>"  //
+        content += "<div style='position: relative;'><table style='background: no-repeat 12px 75%/32px url(\"icons/"+item.properties.EC_GROUP.match(/\w+/)+".png\")"
+        if(!newstyle) content += ", no-repeat left/contain url(\"icons/warn.png\"), linear-gradient(to right, "+color[item.properties.SEVERITY]+" 54px,transparent 54px)"
+        content += "; border-spacing:0px'"
         + "><tr><td>Ereignis :</td><td><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT.replace("RMATION","") + "</a></b></td></tr>"  //.EVENT
         + "<tr><td></td><td"+(Date.now()-o<0?" style='color:#808080'":"")+">" + onset + "</td></tr>"  //Beginn:
-        + "<tr><td></td><td"+(Date.now()-e>0?" style='color:#808080'":"")+">" + (item.properties.EXPIRES?end:"&nbsp;") + "</td></tr></table><p></p>";  //Ende:
+        + "<tr><td></td><td"+(Date.now()-e>0?" style='color:#808080'":"")+">" + (item.properties.EXPIRES?end:"&nbsp;") + "</td></tr></table>"
+        +"</div></div>"  //
+        +"<p></p>";  //Ende:
         //content += "Gesendet: " + item.properties.SENT + "</p>";
     });
     content += "<a target='dwd' href='https://www.dwd.de/warnungen'>dwd.de</a> "+new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"});
