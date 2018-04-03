@@ -62,7 +62,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
           query_layers: this.wmsParams.layers,
           info_format: 'application/json',  //text/javascript
           // Warnmodul2: nur ausgewählte Properties werden abgefragt - eine ungefilterte Antwort liefert eine Vielzahl weiterer Eigenschaften der Warnungen, analog zum Inhalt im CAP-Format
-          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP,SENT',  //,SEVERITY,EC_GROUP
+          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP',  //,SEVERITY,EC_GROUP
           // Warnmodul2: FEATURE_COUNT > 1 notwendig, um im Falle überlappender Warnungen alle Warnungen abzufragen
           FEATURE_COUNT: 50
         };
