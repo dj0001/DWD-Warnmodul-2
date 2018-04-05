@@ -85,12 +85,12 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     data.features.sort(function(a, b){return new Date(a.properties.ONSET) - new Date(b.properties.ONSET)});  //sort array
     data.features.forEach(function(item){  //$.each(data.features, function (i, item) {
         var o = new Date(item.properties.ONSET);
-        var e = new Date(item.properties.EXPIRES); var td=(e.toDateString()==o.toDateString());
-        onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr";
+        var e = new Date(item.properties.EXPIRES); var td=(e.toDateString()==o.toDateString()), ec=item.properties.EC_GROUP.match(/\w+/); ec={TORNADO:"WIND",HAIL:"RAIN",SNOWDRIFT:"SNOWFALL"}[ec]||ec
+        var onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr",
         end = (td?"Ende :":(('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + "."))+" - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
         content += "<div style='position: relative;'>"  //
         if(newstyle) content += "<div style='position: absolute;top: 0px;left: 0px'><svg width=56 height=56 viewBox=\"0 0 64 64\"><polygon points=\"30,4 4,60 60,60\" stroke-linejoin=\"round\" style=\"fill:none;stroke:"+color[item.properties.SEVERITY]+";stroke-width:5\" /></svg></div>"  //
-        content += "<div style='position: relative;'><table style='background: no-repeat 12px 75%/32px url(\"icons/"+item.properties.EC_GROUP.match(/\w+/)+".png\")"
+        content += "<div style='position: relative;'><table style='background: no-repeat 12px 75%/32px url(\"icons/"+ec+".png\")"
         if(!newstyle) content += ", no-repeat left/contain url(\"icons/warn.png\"), linear-gradient(to right, "+color[item.properties.SEVERITY]+" 54px,transparent 54px)"
         content += "; border-spacing:0px'"
         + "><tr><td>Ereignis :</td><td><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT.replace("RMATION","") + "</a></b></td></tr>"  //.EVENT
