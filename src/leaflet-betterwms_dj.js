@@ -62,7 +62,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
           query_layers: this.wmsParams.layers,
           info_format: 'application/json',  //text/javascript
           // Warnmodul2: nur ausgewählte Properties werden abgefragt - eine ungefilterte Antwort liefert eine Vielzahl weiterer Eigenschaften der Warnungen, analog zum Inhalt im CAP-Format
-          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP',  //,SEVERITY,EC_GROUP
+          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP' +(this.wmsParams.layers.match(/seen|kreise/)?',AREADESC':''),  //,SEVERITY,EC_GROUP
           // Warnmodul2: FEATURE_COUNT > 1 notwendig, um im Falle überlappender Warnungen alle Warnungen abzufragen
           FEATURE_COUNT: 50
         };
@@ -85,9 +85,10 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     data.features.sort(function(a, b){return new Date(a.properties.ONSET) - new Date(b.properties.ONSET)});  //sort array
     data.features.forEach(function(item){  //$.each(data.features, function (i, item) {
         var o = new Date(item.properties.ONSET);
-        var e = new Date(item.properties.EXPIRES); var td=(e.toDateString()==o.toDateString()), ec=item.properties.EC_GROUP.match(/\w+/); ec={TORNADO:"WIND",HAIL:"RAIN",SNOWDRIFT:"SNOWFALL"}[ec]||ec
+        var e = new Date(item.properties.EXPIRES); var ec=item.properties.EC_GROUP.match(/\w+/); ec={TORNADO:"WIND",HAIL:"RAIN",SNOWDRIFT:"SNOWFALL"}[ec]||ec
         var onset = ('0' + o.getDate()).slice(-2) + '.' + ('0' + (o.getMonth()+1)).slice(-2) + ". - " + ('0' + (o.getHours())).slice(-2) + ":" + ('0' + (o.getMinutes())).slice(-2) + " Uhr",
-        end = (td?"Ende :":(('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + "."))+" - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
+        end = ('0' + e.getDate()).slice(-2) + '.' + ('0' + (e.getMonth()+1)).slice(-2) + "." +" - " + ('0' + (e.getHours())).slice(-2) + ":" + ('0' + (e.getMinutes())).slice(-2) + " Uhr" ;
+        if(e.toDateString()==o.toDateString()) end=end.replace(/.{6}/,'Ende :')  //
         content += "<div style='position: relative;'>"  //
         if(newstyle) content += "<div style='position: absolute;top: 0px;left: 0px'><svg width=56 height=56 viewBox=\"0 0 64 64\"><polygon points=\"30,4 4,60 60,60\" stroke-linejoin=\"round\" style=\"fill:none;stroke:"+color[item.properties.SEVERITY]+";stroke-width:5\" /></svg></div>"  //
         content += "<div style='position: relative;'><table style='background: no-repeat 12px 75%/32px url(\"icons/"+ec+".png\")"
@@ -95,13 +96,13 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
         content += "; border-spacing:0px'"
         + "><tr><td>Ereignis :</td><td><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT.replace("RMATION","") + "</a></b></td></tr>"  //.EVENT
         + "<tr><td></td><td"+(Date.now()-o<0?" style='color:#808080'":"")+">" + onset + "</td></tr>"  //Beginn:
-        + "<tr><td></td><td"+(Date.now()-e>0?" style='color:#808080'":"")+">" + (item.properties.EXPIRES?end:"&nbsp;") + "</td></tr></table>"
+        + "<tr><td></td><td"+(Date.now()-e>0?" style='color:#808080'":"")+">" + (item.properties.EXPIRES?end:item.properties.AREADESC) + "</td></tr></table>" //"&nbsp;"
         +"</div></div>"  //
         +"<p></p>";  //Ende:
         //content += "Gesendet: " + item.properties.SENT + "</p>";
     });
     content += "<a target='dwd' href='https://www.dwd.de/warnungen'>dwd.de</a> "+new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"});
-    if((Date.now()-new Date(data.features[0].properties.SENT))/3.6e6>48) content += " not up to date, use <a href='?7'>Landkreise</a>"
+    if((Date.now()-new Date(data.features[0].properties.SENT))/3.6e6>48) content += " not up to date, try <a href='?7'>Landkreise</a>"  //
 
     this._marker.bindPopup(content,{ maxWidth: 800}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
   }
