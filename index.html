@@ -118,7 +118,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 			"<span title='DWD Geoserver dwd:Warnungen_Gemeinden_vereinigt'>Warnungen einblenden</span>": warnlayer.addTo(karte),
 			"<span title='DWD Geoserver Gemeindewarngebiete'>Gemeindegrenzen</span>": gemeindelayer,
 			"<span title='Satellitenbild METEOSAT'>Satellitenbild</span>": satlayer
-		        , "<span title='Warnungen_Binnenseen und Küste'>Warnungen Binnenseen</span>": seenlayer
+		        , "<span title='Warnungen_Binnenseen und Küste'>Warnungen Binnenseen</span>": qs.match("see")?seenlayer.addTo(karte):seenlayer  //?ort="Ostsee"
 	};
 
 	// Layercontrol-Element erstellen und hinzufügen
