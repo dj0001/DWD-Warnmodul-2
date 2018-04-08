@@ -62,7 +62,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
           query_layers: this.wmsParams.layers,
           info_format: 'application/json',  //text/javascript
           // Warnmodul2: nur ausgewählte Properties werden abgefragt - eine ungefilterte Antwort liefert eine Vielzahl weiterer Eigenschaften der Warnungen, analog zum Inhalt im CAP-Format
-          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP' +(this.wmsParams.layers.match(/seen|kreise/)?',AREADESC':''),  //,SEVERITY,EC_GROUP
+          propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP' +(this.wmsParams.layers.match(/seen|kreise/)?',AREADESC':''),  //,PARAMATERVALUE,DESCRIPTION,ALTITUDE
           // Warnmodul2: FEATURE_COUNT > 1 notwendig, um im Falle überlappender Warnungen alle Warnungen abzufragen
           FEATURE_COUNT: 50
         };
@@ -91,15 +91,16 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
         if(e.toDateString()==o.toDateString()) end=end.replace(/.{6}/,'Ende :')  //
         content += "<div style='position: relative;'>"  //
         if(newstyle) content += "<div style='position: absolute;top: 0px;left: 0px'><svg width=56 height=56 viewBox=\"0 0 64 64\"><polygon points=\"30,4 4,60 60,60\" stroke-linejoin=\"round\" style=\"fill:none;stroke:"+color[item.properties.SEVERITY]+";stroke-width:5\" /></svg></div>"  //
-        content += "<div style='position: relative;'><table style='background: no-repeat 12px 75%/32px url(\"icons/"+ec+".png\")"
+        content += "<div style='position: relative;'><table style='"  //background: no-repeat 12px 75%/32px url(\"icons/"+ec+".png\")
         if(!newstyle) content += ", no-repeat left/contain url(\"icons/warn.png\"), linear-gradient(to right, "+color[item.properties.SEVERITY]+" 54px,transparent 54px)"
-        content += "; border-spacing:0px'"
-        + "><tr><td>Ereignis :</td><td><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT.replace("RMATION","") + "</a></b></td></tr>"  //.EVENT
-        + "<tr><td></td><td"+(Date.now()-o<0?" style='color:#808080'":"")+">" + onset + "</td></tr>"  //Beginn:
+        content += "; border-spacing:0px'>"
+        + "<tr><td>Ereignis :</td><td><b><a style='text-decoration:none' href='?" + item.properties.EC_GROUP + "'>" + item.properties.EVENT.replace("RMATION","") + "</a></b>"  //.EVENT
+        //+ (item.properties.ALTITUDE?" <sup>&uarr;"+(0.3048*item.properties.ALTITUDE).toFixed()+"m</sup>":"")  //add ALTITUDE to propertyName
+        + "</td></tr><tr><td></td><td"+(Date.now()-o<0?" style='color:#808080'":"")+">" + onset + "</td></tr>"  //Beginn:
         + "<tr><td></td><td"+(Date.now()-e>0?" style='color:#808080'":"")+">" + (item.properties.EXPIRES?end:item.properties.AREADESC) + "</td></tr></table>" //"&nbsp;"
-        +"</div></div>"  //
-        +"<p></p>";  //Ende:
-        //content += "Gesendet: " + item.properties.SENT + "</p>";
+        +"</div>"  //
+        +"<div title='"+(item.properties.PARAMATERVALUE||'')+"' style='position: absolute;top: 0px;left: 0px;width:56px;height:56px;background: no-repeat 12px 75%/32px url(\"icons/"+ec+".png\")'></div>"  //DESCRIPTION
+        +"</div><p></p>";
     });
     content += "<a target='dwd' href='https://www.dwd.de/warnungen'>dwd.de</a> "+new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"});
     if((Date.now()-new Date(data.features[0].properties.SENT))/3.6e6>48) content += " not up to date, try <a href='?7'>Landkreise</a>"  //
