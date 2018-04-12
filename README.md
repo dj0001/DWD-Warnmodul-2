@@ -32,7 +32,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 13.03. add alternative [themes](https://github.com/dj0001/DWD/tree/gh-pages/new/themes)    
 17.03. full configurable background    
 31.03. add parameter filter ?6 tomorrow    
-31.03. ~~Warnungen_Gemeinden not up to date currently;~~ replace with [Warnungen_Landkreise](https://dj0001.github.io/DWD-Warnmodul-2/?7) or use [testserver](https://dj0001.github.io/DWD/new/index_testserver.html?7)    
+31.03. ~~Warnungen_Gemeinden not up to date currently;~~ replace with [Warnungen_Landkreise](https://dj0001.github.io/DWD-Warnmodul-2/?7)    
 &nbsp;&nbsp;.04. add Pollenflug    
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
