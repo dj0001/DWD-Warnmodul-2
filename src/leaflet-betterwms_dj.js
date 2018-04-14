@@ -58,8 +58,8 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
           bbox: this._map.getBounds().toBBoxString(),
           height: size.y,
           width: size.x,
-          layers: this.wmsParams.layers,
-          query_layers: this.wmsParams.layers,
+          layers: this.wmsParams.layers.replace(/gt_.+/,'gt'),
+          query_layers: this.wmsParams.layers.replace(/gt_.+/,'gt'),
           info_format: 'application/json',  //text/javascript
           // Warnmodul2: nur ausgewählte Properties werden abgefragt - eine ungefilterte Antwort liefert eine Vielzahl weiterer Eigenschaften der Warnungen, analog zum Inhalt im CAP-Format
           propertyName: 'EVENT,ONSET,EXPIRES,SENT,SEVERITY,EC_GROUP' +(this.wmsParams.layers.match(/seen|kreise/)?',AREADESC':''),  //,PARAMATERVALUE,DESCRIPTION,ALTITUDE
