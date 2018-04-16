@@ -22,7 +22,7 @@ var dt=0; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
      if(isNaN(warnlev)?
      data.features.map(function(obj){return obj.properties.EC_GROUP}).some(function(x){return (x.match(warnlev))}) :   //.EVENT warnlev.split(",").indexOf(x)+1  //querystringparameter ?EC_GROUP e.g. ?GLAZE
      data.features.map(function(obj){return obj.properties.SEVERITY}).some(function(x){return (severity.indexOf(x) >= warnlev-1+dt)}))  //  ?warnlevel e.g. ?1
-     {showNotification(data.features.length); dt++}} else dt=0;  //dt reduces noti
+     {if(qs!=="-0"||qs==="-0"&&document.hidden) showNotification(data.features.length); dt++}} else dt=0;  //dt reduces noti //?-0 notification, only hidden document
 })
 
 if(navigator.serviceWorker) navigator.serviceWorker.register('sw.js');
@@ -72,7 +72,7 @@ L.Control.Watermark = L.Control.extend({ //image for geocode (OpenStreetMap)
 L.control.watermark = function(opts) {return new L.Control.Watermark(opts)}
 var geo=L.control.watermark({position: 'bottomright'}).addTo(karte)  //add geocode
 
-  if(isNaN(qs) &&qs.match(/^ort=/)) {qs=qs.slice(4); if(qs.match(/^[\d,-\.]+$/)) {karte.setView(qs.split(","),6,{animate:false}); warnlayer.getFeatureInfoJsonp({latlng: qs.split(",")})}  //?ort=48.37,10.9
+  if(isNaN(qs) &&qs.match(/^ort=/)) {qs=qs.slice(4); if(qs!=0&& qs.match(/^[\d,-\.]+$/)) {karte.setView(qs.split(","),6,{animate:false}); warnlayer.getFeatureInfoJsonp({latlng: qs.split(",")})}  //?ort=48.37,10.9
    else geo._geocode(qs); qs=''} else if(qs!=="0") karte.locate({setView: true, maxZoom: 8});  //add geolocation
   karte.on('locationfound', function(e){console.log(e.latitude+","+e.longitude); warnlayer.getFeatureInfoJsonp(e)})
   karte.on('locationerror', function(e){if(qs==1) setTimeout(function(){karte.locate({setView:true, maxZoom:8})}, auto); else console.log(e)})  //
