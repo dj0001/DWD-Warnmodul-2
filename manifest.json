@@ -1,0 +1,15 @@
+{
+	"short_name": "DWD",
+	"name": "DWD- Warnmodul 2",
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "icons/warn.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		}
+	],
+	"start_url": ".",
+	"theme_color": "#5ac1f2",
+	"background_color": "#383838"
+}
