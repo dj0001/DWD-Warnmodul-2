@@ -116,15 +116,22 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 		transparent: true,
 		opacity: 0.6
 	});
+		var pollenlayer = L.tileLayer.betterWms("https://maps.dwd.de/geoserver/dwd/wms/", {  //
+		layers: 'Pollenflug_'+(new Date().getMonth()>=4?'Graeser':'Birke'),
+		format: 'image/png',
+		styles: '',
+		transparent: true,
+		opacity: 0.6
+	});
 	var overLayers = {
 			"<span title='DWD Geoserver dwd:Warnungen_Gemeinden_vereinigt'>Warnungen einblenden</span>": warnlayer.addTo(karte),
 			"<span title='DWD Geoserver Gemeindewarngebiete'>Gemeindegrenzen</span>": gemeindelayer,
 			"<span title='Satellitenbild METEOSAT'>Satellitenbild</span>": satlayer
 		        , "<span title='Warnungen_Binnenseen und Küste'>Warnungen Binnenseen</span>": qs.match("see")?seenlayer.addTo(karte):seenlayer  //?ort="Ostsee"
-	};
+	}; overLayers["<span title='Pollenflug'>"+pollenlayer.options.layers+"</span>"] = pollenlayer
 
 	// Layercontrol-Element erstellen und hinzufügen
-    L.control.layers(baseLayers, overLayers).addTo(karte);
+    L.control.layers(baseLayers, overLayers).addTo(karte);  //, {autoZIndex:false})
 
 	// Demo-Marker mit Popup hinzufügen
 	//var marker = L.marker([50.099444, 8.770833]).addTo(karte);
