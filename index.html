@@ -50,6 +50,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	//(function(){
 	var qs=""  //edit here options
 	qs= decodeURI(location.search.slice(1))||qs;  //URL parameter
+	qs=qs.replace('ort=0','0').replace(/ort=$/,'1')  //default: auto
 	// Leaflet-Kartenobjekt im referenzierten div erstellen und initiale Optionen für Karte übergeben
 	var karte = L.map('kartencontainer', {
 		// Mittelpunkt der Karte als Breiten- und Längengrad, bspw. 50.0956° N, 8.7761° E für Offenbach
