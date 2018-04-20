@@ -48,6 +48,8 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 
 <script>
 	//(function(){
+	var qs=""  //edit here options
+	qs= decodeURI(location.search.slice(1))||qs;  //URL parameter
 	// Leaflet-Kartenobjekt im referenzierten div erstellen und initiale Optionen für Karte übergeben
 	var karte = L.map('kartencontainer', {
 		// Mittelpunkt der Karte als Breiten- und Längengrad, bspw. 50.0956° N, 8.7761° E für Offenbach
@@ -66,7 +68,6 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 		maxZoom: 18
 	});
 
-	var qs=decodeURI(location.search.slice(1));  //URL parameter
 	// Warnungs-Layer vom DWD-Geoserver - betterWms fügt Möglichkeiten zur GetFeatureInfo hinzu
 	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/"+(qs!=6 &&qs!=7?"geoproxy_warnungen/service/":"geoserver/dwd/wms/"), {
 		layers: (qs!=7? 'Warnungen_Gemeinden_vereinigt':'Warnungen_Landkreise')+(isNaN(qs) &&!qs.match(/^ort=/) && qs.match(/[a-z]|UV/)? '_'+qs:''),  // Filterung
@@ -116,7 +117,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 		transparent: true,
 		opacity: 0.6
 	});
-		var pollenlayer = L.tileLayer.betterWms("https://maps.dwd.de/geoserver/dwd/wms/", {  //
+		var pollenlayer = L.tileLayer.wms("https://maps.dwd.de/geoserver/dwd/wms/", {  //
 		layers: 'Pollenflug_'+(new Date().getMonth()>=4?'Graeser':'Birke'),
 		format: 'image/png',
 		styles: '',
