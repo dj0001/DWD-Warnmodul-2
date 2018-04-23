@@ -50,6 +50,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	//(function(){
 	var qs=""  //edit here options "ort=Augsburg"
 	qs= decodeURI(location.search.slice(1))||qs;  //qs=qs.replace('ort=0','0').replace(/ort=1/,'1')  //URL parameter
+	var opt=qs.replace(/.*?(&|$)/,''); opt=opt? JSON.parse('{"' + opt.replace(/&/g, '","').replace(/=/g, '":"') + '"}') :{}; qs=qs.replace(/&.*/,'')  //&lkr=1
 	// Leaflet-Kartenobjekt im referenzierten div erstellen und initiale Optionen für Karte übergeben
 	var karte = L.map('kartencontainer', {
 		// Mittelpunkt der Karte als Breiten- und Längengrad, bspw. 50.0956° N, 8.7761° E für Offenbach
@@ -69,8 +70,8 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	});
 
 	// Warnungs-Layer vom DWD-Geoserver - betterWms fügt Möglichkeiten zur GetFeatureInfo hinzu
-	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/"+(qs!=6 &&qs!=7?"geoproxy_warnungen/service/":"geoserver/dwd/wms/"), {
-		layers: (qs!=7? 'Warnungen_Gemeinden_vereinigt':'Warnungen_Landkreise')+(isNaN(qs) &&!qs.match(/^ort=/) && qs.match(/[a-z]|UV/)? '_'+qs:''),  // Filterung
+	var warnlayer = L.tileLayer.betterWms("https://maps.dwd.de/"+(!opt.day &&!opt.lkr?"geoproxy_warnungen/service/":"geoserver/dwd/wms/"), {
+		layers: (!opt.lkr? 'Warnungen_Gemeinden_vereinigt':'Warnungen_Landkreise')+(isNaN(qs) &&!qs.match(/^ort=/) && qs.match(/[a-z]|UV/)? '_'+qs:''),  // Filterung
 		// eigene Styled Layer Descriptor (SLD) können zur alternativen Anzeige der Warnungen genutzt werden (https://docs.geoserver.org/stable/en/user/styling/sld/reference/)
 		//sld: 'https://eigenerserver/alternativer.sld',
 		format: 'image/png',
@@ -83,7 +84,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	// Filterung kann auf Basis der verschiedenen properties der Warnungen erfolgen (bspw. EC_II, EC_GROUP, DESCRIPTION ... ) siehe https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/einbindung_karten_geowebservice.pdf
  	// warnlayer.setParams({CQL_FILTER:"DESCRIPTION LIKE '%Sturm%'"});
  	//if(isNaN(qs) &&!qs.match(/^ort=/)) warnlayer.setParams({CQL_FILTER:"EVENT IN ('"+qs.replace(/,/g,"','")+"')"})  //"EC_GROUP LIKE '%"+qs+"%'"
-	if(qs==6) warnlayer.setParams({CQL_FILTER:"EXPIRES AFTER "+new Date(new Date().setUTCHours(24,0,0)).toISOString()})  //?6 tomorrow
+	if(opt.day) warnlayer.setParams({CQL_FILTER:"EXPIRES AFTER "+new Date(new Date().setUTCHours(24,0,0)).toISOString()})  //?&day=1 tomorrow
 	// Filter können zur Laufzeit, z.B. über Nutzereingaben angepasst werden
  	//delete warnlayer.wmsParams.CQL_FILTER;
  	//warnlayer.redraw();
