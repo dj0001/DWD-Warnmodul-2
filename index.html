@@ -49,8 +49,8 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 <script>
 	//(function(){
 	var qs=""  //edit here options "ort=Augsburg"
-	qs= decodeURI(location.search.slice(1))||qs;  //qs=qs.replace('ort=0','0').replace(/ort=1/,'1')  //URL parameter
-	var opt=qs.replace(/.*?(&|$)/,''); opt=opt? JSON.parse('{"' + opt.replace(/&/g, '","').replace(/=/g, '":"') + '"}') :{}; qs=qs.replace(/&.*/,'')  //&lkr=1
+	qs= decodeURIComponent(location.search.slice(1))||qs;  //qs=qs.replace('ort=0','0').replace(/ort=1/,'1')  //URL parameter
+	var opt=qs.replace(/.*?(&|$)/,''); opt=opt? JSON.parse('{"' + opt.replace(/&/g, '","').replace(/=/g, '":"') + '"}') :{}; qs=qs.replace('qs=','').replace(/&.*/,'')  //&lkr=1
 	// Leaflet-Kartenobjekt im referenzierten div erstellen und initiale Optionen für Karte übergeben
 	var karte = L.map('kartencontainer', {
 		// Mittelpunkt der Karte als Breiten- und Längengrad, bspw. 50.0956° N, 8.7761° E für Offenbach
