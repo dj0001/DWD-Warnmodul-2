@@ -27,14 +27,13 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 31.01. add parameter ?0 no-geolocation, ?1 watch-geo    
 16.02. add more locations [beta](https://dj0001.github.io/DWD/new/index_multi.html)    
 18.02. without map [beta](https://dj0001.github.io/DWD/new/index_womap.html?1)    
-28.02. structured data [beta](https://search.google.com/structured-data/testing-tool#url=https%3A%2F%2Fdj0001.github.io%2FDWD%2Fnew%2Findex_st.html%3Fort%3DAugsburg)    
 01.03. add Binnenseen    
 13.03. add alternative [themes](https://github.com/dj0001/DWD/tree/gh-pages/new/themes)    
 17.03. full configurable background    
 31.03. add parameter filter ?&day=1 tomorrow    
 31.03. ~~Warnungen_Gemeinden not up to date currently;~~ replace with [Warnungen_Landkreise](https://dj0001.github.io/DWD-Warnmodul-2/?&lkr=1)    
 18.04. add Pollenflug    
-24.04. add [configurator](https://dj0001.github.io/DWD/new/config.html)    
+24.04. add [configurator](https://dj0001.github.io/DWD-Warnmodul-2/addons/config.html)    
 03.05. add philipshue addon [beta](addons/philipshue.js)  
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
