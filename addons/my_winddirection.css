@@ -1,0 +1,10 @@
+/* add PARAMATERVALUE to propertyName in betterwms */
+
+/* div[title=W] {transform:rotateY(0deg)} */
+div[title=NW] {transform:perspective(100px) rotateY(-135deg)}
+div[title=N] {transform:perspective(100px) rotateY(-135deg)}
+div[title=NO] {transform:perspective(100px) rotateY(-135deg)}
+div[title=O] {transform:perspective(100px) rotateY(180deg)}
+div[title=SO] {transform:perspective(100px) rotateY(45deg)}
+div[title=S] {transform:perspective(100px) rotateY(45deg)}
+div[title=SW] {transform:perspective(100px) rotateY(45deg)}
