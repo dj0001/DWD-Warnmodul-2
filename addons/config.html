@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+<title>configurator for DWD- Warnmodul 2</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="https://dj0001.github.io/DWD-Warnmodul-2/">
+<style>
+body {font-family:Helvetica }
+input[type=image] {width: 24px}
+input[type=image]:focus {border: 1px solid blue} /* IE */
+:root {--warncolor:linear-gradient(to right, yellow,yellow 25%,orange 25%,orange 50%,red 50%,red 75%,darkred 75%)}
+input[type=range]::-webkit-slider-runnable-track {background:var(--warncolor)} input[type=range]::-moz-range-track {background:var(--warncolor)}
+.onoffswitch {display: inline-block; position: relative; width: 28px; -moz-user-select:none;} #myonoffswitch {display: none;} .onoffswitch-label {display: block; overflow: hidden; cursor: pointer; height: 8px; padding: 0; line-height: 8px; border: 0px solid #FFFFFF; border-radius: 16px; background-color: #9E9E9E;} .onoffswitch-label:before {content: ""; display: block; width: 16px; margin: -4px; background: #FFFFFF; position: absolute; top: 0; bottom: 0; right: 16px; border-radius: 16px; box-shadow: 0 6px 12px 0px #757575;} #myonoffswitch:checked + .onoffswitch-label {background-color: #CCCCCC; margin-left: 0;} #myonoffswitch:checked + .onoffswitch-label, #myonoffswitch:checked + .onoffswitch-label:before {border-color: #CCCCCC;} #myonoffswitch:checked + .onoffswitch-label:before {right: 0px; background-color: #9E9E9E; box-shadow: 3px 6px 18px 0px rgba(0, 0, 0, 0.2);} 
+span[onclick] {cursor:pointer}
+header {background: #f1f1f1; margin: -8px -8px 0px; padding: 8px 10px}
+</style>
+</head>
+
+<main>  <!-- details -->
+<header>eine Option wählen</header><br>  <!-- summary -->
+
+<span id="group">
+<input type="image" src="https://www.dwd.de/DWD/warnungen/warnapp_gemeinden/viewer/img/warnicons/warn_icons_alle.png" alt="alle" title="">
+<input type="image"  src="icons/THUNDERSTORM.png" title="Gewitter">
+<input type="image"  src="icons/WIND.png" title="Sturm">
+<input type="image"  src="icons/RAIN.png" title="Regen">
+<input type="image"  src="icons/SNOWFALL.png" title="Schnee">
+<input type="image"  src="icons/FROST.png" title="Frost">
+<input type="image"  src="icons/GLAZE.png" title="Glatteis">
+<input type="image"  src="icons/THAW.png" title="Tauwetter">
+<input type="image"  src="icons/FOG.png" title="Nebel">
+<input type="image"  src="icons/HEAT.png" title="Hitze">
+<input type="image"  src="icons/UV.png" title="UV">
+</span>
+
+<br>
+<input type="text" placeholder="Ort" list="cityname" title="default: locate" onchange='para((isNaN(this.value)?"ort=":"")+this.value);document.getElementById("level").value="1"' id="ort">  <!-- oninput -->
+<span onclick='navigator.geolocation.getCurrentPosition(function(pos) {document.getElementById("ort").value=pos.coords.latitude+","+pos.coords.longitude;document.getElementById("ort").onchange()})'>&#x2316;</span>
+<datalist id="cityname">
+  <option value="">locate</option>
+  <option value="0">none</option>
+  <option value="1">watch</option>
+</datalist>
+
+<br>
+<small>Warnlevel</small><br>
+<input type="range" min="1" max="5" step="1" value="1" id="level" title="&#x2265;1" onchange='this.title=this.value; para(this.value.replace("1",""));document.getElementById("ort").value=""' list="tickmarks">
+<datalist id="tickmarks">
+  <option value="1">
+  <option value="2">
+  <option value="3">
+  <option value="4">
+  <option value="5">
+</datalist>
+<br><br>
+
+<form action="index.html" target="wm">
+<input type="hidden" name="qs">
+  Landkreise 
+  <div class="onoffswitch"><input type="checkbox" name="lkr" id="myonoffswitch"><label class="onoffswitch-label" for="myonoffswitch"></label></div>
+  <br><br>
+<input type="submit" value="Warnmodul">
+</form>
+</main>
+
+<script>
+if(window.self!=window.top) document.querySelector("form").target="_top"  //embeded as iframe in index.html
+if(location.search) {var tmp = document.createElement("iframe");tmp.setAttribute("frameborder","0");tmp.setAttribute("name","wm");tmp.setAttribute("scrolling","no");tmp.width=600;tmp.height=300;document.body.appendChild(tmp)}  //?1
+function para(query) {document.querySelector("input[type=hidden]").value=query; document.querySelector("input[type=submit]").title=query}
+var tmp=document.querySelectorAll('input[type=image]'); for (var i=0; i<tmp.length; i++) {
+ tmp[i].onclick = function(e) {para(e.target.title);document.getElementById("ort").value="";document.getElementById("level").value="1";document.getElementById("myonoffswitch").checked = false}
+ }
+</script>
