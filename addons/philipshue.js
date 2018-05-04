@@ -1,6 +1,6 @@
 //add script at the end
 //lights go on for warnings
-//tested with emulator, because i don't have a bridge
+//tested with emulator, because i don't own a bridge
 
 var path=opt.light  //URL parameter ?&light=1
 path=path? "lights/"+path+"/state" :"groups/0/action"
