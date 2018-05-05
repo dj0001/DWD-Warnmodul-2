@@ -32,6 +32,7 @@ xhr.send(JSON.stringify(bd))
 
 function changebri(hd){
 bridge=prompt(hd+"change bridge adress", bridge)||bridge
+bridge=((bridge.match("http://"))?'':'http://')+bridge
 localStorage.bridge=bridge
 }
 
