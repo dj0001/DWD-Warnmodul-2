@@ -2,6 +2,8 @@
 //lights go on for warnings
 //tested with emulator, because i don't own a bridge
 
+(function(){
+var bridge="http://localhost:8000/api/newdeveloper"  //edit here
 var path=opt.light  //URL parameter ?&light=1
 path=path? "lights/"+path+"/state" :"groups/0/action"
 
@@ -20,11 +22,19 @@ if(!isNaN(qs) && max >= qs-1+dt) {showLights(bd); dt++}  //warnlev
 })
 
 function showLights(bd) {
-var bridge="http://localhost:8000/api/newdeveloper"  //edit here
 var xhr = new XMLHttpRequest();
 xhr.open("PUT", bridge+"/"+path)
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.onload = function() {console.log(xhr.responseText)}
-xhr.onerror = function(e) {console.log("error")}
+xhr.onerror = function(e) {changebri("Error\n")}
 xhr.send(JSON.stringify(bd))
 }
+
+function changebri(hd){
+bridge=prompt(hd+"change bridge adress", bridge)||bridge
+localStorage.bridge=bridge
+}
+
+if ((localStorage||{}).bridge) bridge=localStorage.bridge; else changebri("addon successfully installed\n")  // ?4 disable
+console.log(bridge)
+})();
