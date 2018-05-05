@@ -31,8 +31,9 @@ xhr.send(JSON.stringify(bd))
 }
 
 function changebri(hd){
+if(!bridge.match("/api")) hd='must contain /api\n'
 bridge=prompt(hd+"change bridge adress", bridge)||bridge
-bridge=((bridge.match("http://"))?'':'http://')+bridge
+bridge=((bridge.match(/https?:/))?'':'http://')+bridge
 localStorage.bridge=bridge
 }
 
