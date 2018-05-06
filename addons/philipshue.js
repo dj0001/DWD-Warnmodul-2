@@ -5,7 +5,7 @@
 (function(){
 var bridge="http://localhost:8000/api/newdeveloper"  //edit here
 var path=opt.light  //URL parameter ?&light=1
-path=isNaN(path)? "groups/0/action" :"lights/"+path+"/state"
+if(!path) path="groups/0/action"; else path=isNaN(path)? "sensors"+path+"/state" :"lights/"+path+"/state"  //?&light=/3 sensor
 
 var dt=0; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
 if(data.features.length) {
@@ -17,7 +17,7 @@ max=Math.max(max,severity.indexOf(item.SEVERITY))
 var color=[10920,5481,0,0]
 var bd={"bri":127,"sat":255,on:true}; bd.hue=color[max]  //={on:true}
 
-if(!isNaN(qs) && max >= qs-1+dt) {showLights(bd); dt++}  //warnlev
+if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max}:bd); dt++}  //warnlev
  } else dt=0
 })
 
