@@ -37,6 +37,9 @@ bridge=((bridge.match(/https?:/))?'':'http://')+bridge
 localStorage.bridge=bridge
 }
 
-if ((localStorage||{}).bridge) bridge=localStorage.bridge; else changebri("addon successfully installed\n")  // ?4 disable
+if ((localStorage||{}).bridge) bridge=localStorage.bridge; 
+else if(self.fetch) { fetch("https://www.meethue.com/api/nupnp").then(function(response)  //discover bridge
+ {response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri((data[0]?'':"not ")+"found\n")})} )} 
+else changebri("addon successfully installed\n")  // ?4 disable
 console.log(bridge)
 })();
