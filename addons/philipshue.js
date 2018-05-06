@@ -25,7 +25,7 @@ function showLights(bd) {
 var xhr = new XMLHttpRequest();
 xhr.open("PUT", bridge+"/"+path)
 xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.onload = function() {console.log(xhr.responseText)}
+xhr.onload = function() {console.log(xhr.responseText); localStorage.bridge=bridge}
 xhr.onerror = function(e) {changebri("Error\n")}
 xhr.send(JSON.stringify(bd))
 }
@@ -34,12 +34,12 @@ function changebri(hd){
 if(!bridge.match("/api")) hd='must contain /api\n'
 bridge=prompt(hd+"change bridge adress", bridge)||bridge
 bridge=((bridge.match(/https?:/))?'':'http://')+bridge
-localStorage.bridge=bridge
 }
 
+//if(opt.reset) delete localStorage.bridge  //?&reset=1
 if ((localStorage||{}).bridge) bridge=localStorage.bridge; 
-else if(self.fetch) { fetch("https://www.meethue.com/api/nupnp").then(function(response)  //discover bridge
- {response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri((data[0]?'':"not ")+"found\n")})} )} 
-else changebri("addon successfully installed\n")  // ?4 disable
+//else if(self.fetch) { fetch("https://www.meethue.com/api/nupnp").then(function(response)  //discover bridge
+// {response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri((data[0]?'':"not ")+"found\n");showLights({on:true})})} )} 
+else {changebri("addon successfully installed\n"); showLights({on:true})}  // ?4 disable
 console.log(bridge)
 })();
