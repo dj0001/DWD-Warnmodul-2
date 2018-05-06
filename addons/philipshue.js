@@ -5,7 +5,7 @@
 (function(){
 var bridge="http://localhost:8000/api/newdeveloper"  //edit here
 var path=opt.light  //URL parameter ?&light=1
-path=path? "lights/"+path+"/state" :"groups/0/action"
+path=isNaN(path)? "groups/0/action" :"lights/"+path+"/state"
 
 var dt=0; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
 if(data.features.length) {
