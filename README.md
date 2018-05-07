@@ -34,7 +34,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 31.03. ~~Warnungen_Gemeinden not up to date currently;~~ replace with [Warnungen_Landkreise](https://dj0001.github.io/DWD-Warnmodul-2/?&lkr=1)    
 18.04. add Pollenflug    
 24.04. add [configurator](https://dj0001.github.io/DWD-Warnmodul-2/addons/config.html)    
-03.05. add philipshue addon [beta](addons/philipshue.js)  
+03.05. add [philipshue](addons/philipshue.js) addon  
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
 ## License
