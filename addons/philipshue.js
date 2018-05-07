@@ -17,8 +17,10 @@ max=Math.max(max,severity.indexOf(item.SEVERITY))
 var color=[10920,5481,0,0]
 var bd={"bri":127,"sat":255,on:true}; bd.hue=color[max]  //={on:true}
 
-if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max}:bd); dt++}  //warnlev
- } else dt=0
+if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++}  //warnlev
+  } else if(dt) {
+ //showLights(path.match("sensors/")?{status:0}:{on:false}); 
+ dt=0}
 })
 
 function showLights(bd) {
