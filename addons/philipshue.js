@@ -33,7 +33,6 @@ xhr.send(JSON.stringify(bd))
 }
 
 function changebri(hd){
-if(!bridge.match("/api")) hd='must contain /api\n'
 bridge=prompt(hd+"change bridge adress", bridge)||bridge
 bridge=((bridge.match(/https?:/))?'':'http://')+bridge
 }
@@ -42,6 +41,10 @@ bridge=((bridge.match(/https?:/))?'':'http://')+bridge
 if ((localStorage||{}).bridge) bridge=localStorage.bridge; 
 //else if(self.fetch) { fetch("https://www.meethue.com/api/nupnp").then(function(response)  //discover bridge
 // {response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri((data[0]?'':"not ")+"found\n");showLights({on:true})})} )} 
-else {changebri("addon successfully installed\n"); showLights({on:true})}  // ?4 disable
+else {changebri("addon successfully installed\n");   // ?4 disable
+ if(bridge.match("/api/")) showLights({on:true}); else
+ fetch(bridge+"/api",{method:"POST",body:'{"devicetype":""}',headers:{'Content-Type':'application/json'}}).then(function(response)  //press link button
+  {response.json().then(function(data){if(data[0].success) bridge+="/api/"+data[0].success.username; showLights({on:true})})} )
+}
 console.log(bridge)
 })();
