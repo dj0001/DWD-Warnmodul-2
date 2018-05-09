@@ -42,9 +42,9 @@ if ((localStorage||{}).bridge) bridge=localStorage.bridge;
 //else if(self.fetch) { fetch("https://www.meethue.com/api/nupnp").then(function(response)  //discover bridge
 // {response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri((data[0]?'':"not ")+"found\n");showLights({on:true})})} )} 
 else {changebri("addon successfully installed\n");   // ?4 disable
- if(!bridge.match("/api")) bridge+="/api"
- if(self.fetch) fetch(bridge,{method:"GET"}).then(function(response)  //"http://localhost:8000/api//config"
-  {response.json().then(function(data){if(!data[0]) localStorage.bridge=bridge; else {
+ if(!bridge.match("/api")) bridge+="/api/dev"
+ if(self.fetch) fetch(bridge+"/config",{method:"GET"}).then(function(response)  //"http://localhost:8000/api//config"
+  {response.json().then(function(data){if(data.whitelist) localStorage.bridge=bridge; else {
    alert("unauthorised user\npress link button"); bridge=bridge.replace(/\/api.*/,'/api')
    fetch(bridge,{method:"POST",body:'{"devicetype":""}',headers:{'Content-Type':'application/json'}}).then(function(response)
    {response.json().then(function(data){if(data[0].success) localStorage.bridge=bridge+="/"+data[0].success.username})} ) }
