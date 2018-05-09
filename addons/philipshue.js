@@ -28,7 +28,7 @@ var xhr = new XMLHttpRequest();
 xhr.open("PUT", bridge+"/"+path)
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.onload = function() {console.log(xhr.responseText);}
-xhr.onerror = function(e) {changebri("Error\n")}  //; delete localStorage.bridge
+xhr.onerror = function(e) {changebri("Error\n")}  //
 xhr.send(JSON.stringify(bd))
 }
 
@@ -41,7 +41,7 @@ bridge=((bridge.match(/https?:/))?'':'http://')+bridge
 if ((localStorage||{}).bridge) bridge=localStorage.bridge; 
 //else if(self.fetch) { fetch("https://www.meethue.com/api/nupnp").then(function(response)  //discover bridge
 // {response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri((data[0]?'':"not ")+"found\n");showLights({on:true})})} )} 
-else {changebri("addon successfully installed\n");   // ?4 disable
+else {changebri("addon successfully installed\n"); }  // ?4 disable
  if(!bridge.match("/api")) bridge+="/api/dev"
  if(self.fetch) fetch(bridge+"/config",{method:"GET"}).then(function(response)  //"http://localhost:8000/api//config"
   {response.json().then(function(data){if(data.whitelist) localStorage.bridge=bridge; else {
@@ -49,7 +49,7 @@ else {changebri("addon successfully installed\n");   // ?4 disable
    fetch(bridge,{method:"POST",body:'{"devicetype":""}',headers:{'Content-Type':'application/json'}}).then(function(response)
    {response.json().then(function(data){if(data[0].success) localStorage.bridge=bridge+="/"+data[0].success.username})} ) }
   })} )
-  .catch(function(err){changebri("bridge not found\n")})
-}
+  .catch(function(err){changebri("bridge not found\n"); delete localStorage.bridge})
+//}
 console.log(bridge)
 })();
