@@ -17,7 +17,9 @@ max=Math.max(max,severity.indexOf(item.SEVERITY))
 var color=[10920,5481,0,0]
 var bd={"bri":254,"sat":255,on:true}; bd.hue=color[max]  //={on:true}  //"bri":127
 
-if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++}  //warnlev
+if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++
+//document.querySelector("input[alt=search]").style.backgroundColor="hsl("+bd.hue/182+","+bd.sat/2.55+"%,"+Math.min(bd.bri/2.55,78)+"%)"  //simulate
+ }  //warnlev
   } else if(dt) {
  //showLights(path.match("sensors/")?{status:0}:{on:false}); 
  dt=0}
