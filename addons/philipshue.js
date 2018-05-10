@@ -54,4 +54,5 @@ else {changebri("addon successfully installed\n"); }  // ?4 disable
   })
 //}
 console.log(bridge)
+warnlayer.on('tileerror', function(e){karte.attributionControl.setPrefix("err")})  //
 })();
