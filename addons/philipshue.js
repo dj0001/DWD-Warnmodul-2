@@ -18,7 +18,7 @@ var color=[10920,5481,0,0]
 var bd={"bri":254,"sat":255,on:true}; bd.hue=color[max]  //={on:true}  //"bri":127
 
 if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++
-//document.querySelector("input[alt=search]").style.backgroundColor="hsl("+bd.hue/182+","+bd.sat/2.55+"%,"+Math.min(bd.bri/2.55,78)+"%)"  //simulate
+//document.querySelector("input[alt=search]").style.backgroundColor="hsl("+bd.hue/182+","+bd.sat/2.55+"%,"+Math.min(bd.bri/2.55,78)+"%)"  //simulate wo bridge
  }  //warnlev
   } else if(dt) {
  //showLights(path.match("sensors/")?{status:0}:{on:false}); 
@@ -55,4 +55,12 @@ else {changebri("addon successfully installed\n"); }  // ?4 disable
 //}
 console.log(bridge)
 warnlayer.on('tileerror', function(e){karte.attributionControl.setPrefix("err")})  //
+
+/*
+setInterval(function(){ //simulate with bridge 
+ fetch(bridge+"/lights/1").then(function(response){response.json().then(function(data){var bd=data.state
+ document.querySelector("input[alt=search]").style.backgroundColor="hsl("+bd.hue/182+","+bd.sat/2.55+"%,"+Math.min((bd.on?bd.bri:0)/2.55,78)+"%)" })})
+}, 3000)
+*/
+
 })();
