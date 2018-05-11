@@ -7,7 +7,7 @@ var bridge="http://localhost:8000/api/newdeveloper"  //edit here
 var path=opt.light  //URL parameter ?&light=1
 if(!path) path="groups/0/action"; else path=isNaN(path)? "sensors"+path+"/state" :"lights/"+path+"/state"  //?&light=/3 sensor
 
-var dt=0; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
+var dt=0, bb={}; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
 if(data.features.length) {
 var severity=["Minor","Moderate","Severe","Extreme"], max=0  //get the highest warnlevel
 data.features.forEach(function(item){ item=item.properties
@@ -17,15 +17,13 @@ max=Math.max(max,severity.indexOf(item.SEVERITY))
 var color=[10920,5481,0,0]
 var bd={"bri":254,"sat":255,on:true}; bd.hue=color[max]  //={on:true}  //"bri":127
 
-if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++
-if(opt.bulb && !(localStorage||{}).bridge) bulb(bd)  //simulate wo bridge
- }  //warnlev
+if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++ }  //warnlev
   } else if(dt) {
  //showLights(path.match("sensors/")?{status:0}:{on:false}); 
  dt=0}
 })
 
-function showLights(bd) {
+function showLights(bd) { bb=bd
 var xhr = new XMLHttpRequest();
 xhr.open("PUT", bridge+"/"+path)
 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -56,8 +54,8 @@ else {changebri("addon successfully installed\n"); }  // ?4 disable
 console.log(bridge)
 warnlayer.on('tileerror', function(e){karte.attributionControl.setPrefix("err")})  //
 
-if(opt.bulb) warnlayer._marker.on('move', function(e){ //simulate bulb with bridge  //?&bulb=1
-if ((localStorage||{}).bridge) setTimeout(function(){ //setInterval
+if(opt.bulb) warnlayer._marker.on('move', function(e){ //simulate bulb  //?&bulb=1
+setTimeout(function(){ if(!(localStorage||{}).bridge) bulb(bb); else  // wo/with bridge
  fetch(bridge+"/lights/1").then(function(response){response.json().then(function(data){ bulb(data.state) })})
  }, 1000)
 })
