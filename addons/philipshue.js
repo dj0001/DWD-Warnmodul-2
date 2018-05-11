@@ -48,7 +48,8 @@ else {changebri("addon successfully installed\n"); }  // ?4 disable
    {response.json().then(function(data){if(data[0].success) localStorage.bridge=bridge+="/"+data[0].success.username})} ) }
   })} )
   .catch(function(err){changebri("bridge not found\n"); delete localStorage.bridge
-  //fetch("https://www.meethue.com/api/nupnp").then(function(response){response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri("found\n")})})
+  if(opt.nupn)  //search on portal
+   fetch("https://www.meethue.com/api/nupnp").then(function(response){response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri("found\n")})})
   })
 //}
 console.log(bridge)
