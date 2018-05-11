@@ -30,7 +30,7 @@ var xhr = new XMLHttpRequest();
 xhr.open("PUT", bridge+"/"+path)
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.onload = function() {console.log(xhr.responseText);}
-xhr.onerror = function(e) {changebri("Error\n")}  //
+xhr.onerror = function(e) {console.log(e.type)}  //
 xhr.send(JSON.stringify(bd))
 }
 
