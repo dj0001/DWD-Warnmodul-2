@@ -56,7 +56,7 @@ warnlayer.on('tileerror', function(e){karte.attributionControl.setPrefix("err")}
 
 if(opt.bulb) warnlayer._marker.on('move', function(e){ //simulate bulb  //?&bulb=1
 setTimeout(function(){ if(!(localStorage||{}).bridge) bulb(bb); else  // wo/with bridge
- fetch(bridge+"/lights/1").then(function(response){response.json().then(function(data){ bulb(data.state) })})
+ fetch(bridge+"/lights/"+(opt.light*1||1)).then(function(response){response.json().then(function(data){ bulb(data.state) })})
  }, 1000)
 })
 function bulb(bd) {document.querySelector("input[alt=search]").style.backgroundColor="hsl("+bd.hue/182+","+bd.sat/2.55+"%,"+Math.min((bd.on?bd.bri:1)/2.55,78)+"%)"}
