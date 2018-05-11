@@ -18,7 +18,7 @@ var color=[10920,5481,0,0]
 var bd={"bri":254,"sat":255,on:true}; bd.hue=color[max]  //={on:true}  //"bri":127
 
 if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++
-//bulb(bd)  //simulate wo bridge
+if(opt.bulb && !(localStorage||{}).bridge) bulb(bd)  //simulate wo bridge
  }  //warnlev
   } else if(dt) {
  //showLights(path.match("sensors/")?{status:0}:{on:false}); 
@@ -56,13 +56,11 @@ else {changebri("addon successfully installed\n"); }  // ?4 disable
 console.log(bridge)
 warnlayer.on('tileerror', function(e){karte.attributionControl.setPrefix("err")})  //
 
-/*
-warnlayer._marker.on('move', function(e){ //simulate bulb with bridge
-setTimeout(function(){ //setInterval
+if(opt.bulb) warnlayer._marker.on('move', function(e){ //simulate bulb with bridge  //?&bulb=1
+if ((localStorage||{}).bridge) setTimeout(function(){ //setInterval
  fetch(bridge+"/lights/1").then(function(response){response.json().then(function(data){ bulb(data.state) })})
  }, 1000)
 })
-*/
 function bulb(bd) {document.querySelector("input[alt=search]").style.backgroundColor="hsl("+bd.hue/182+","+bd.sat/2.55+"%,"+Math.min((bd.on?bd.bri:1)/2.55,78)+"%)"}
 
 })();
