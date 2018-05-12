@@ -8,15 +8,15 @@ var path=opt.light  //URL parameter ?&light=1
 if(!path) path="groups/0/action"; else path=isNaN(path)? "sensors"+path+"/state" :"lights/"+path+"/state"  //?&light=/3 sensor
 
 var bb={}; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
-var bd={"bri":254,"sat":255,on:true}; 
+var bd={"bri":254,"sat":255,on:true};  //"bri":127 
 if(data.features.length) {
 var severity=["Minor","Moderate","Severe","Extreme"], max=0  //get the highest warnlevel
 data.features.forEach(function(item){ item=item.properties
 max=Math.max(max,severity.indexOf(item.SEVERITY))
  })
 
-var color=[10920,5481,0,0]
-bd.hue=color[max]  //={on:true}  //"bri":127
+var color=[10920,5481,0,60060]
+bd.hue=color[max]  //={on:true}
 
 if(!isNaN(qs) && max >= qs-1) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
   } else {showLights(path.match("sensors/")?{status:0}:{on:false}); }  //bd.hue=21840;  bd
