@@ -61,6 +61,6 @@ setTimeout(function(){ if(!(localStorage||{}).bridge) bulb(bb); else  // wo/with
  fetch(bridge+"/lights/"+(opt.light*1||1)).then(function(response){response.json().then(function(data){ bulb(data.state) })})
  }, 1000)
 })
-function bulb(bd) {document.querySelector("input[alt=search]").style.backgroundColor="hsl("+(bd.hue||0)/182+","+(bd.sat||0)/2.55+"%,"+Math.min((bd.on?bd.bri:1)/2.55,78)+"%)"}
+function bulb(bd) {document.querySelector("input[alt=search]").style.backgroundColor=bd.on?"hsl("+(bd.hue||0)/182+","+(bd.sat||0)/2.55+"%,"+Math.min(bd.bri/2.55,78)+"%)":"hsl(0,0%,50%)"}
 
 })();
