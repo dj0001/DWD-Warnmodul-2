@@ -7,7 +7,8 @@ var bridge="http://localhost:8000/api/newdeveloper"  //edit here
 var path=opt.light  //URL parameter ?&light=1
 if(!path) path="groups/0/action"; else path=isNaN(path)? "sensors"+path+"/state" :"lights/"+path+"/state"  //?&light=/3 sensor
 
-var dt=0, bb={}; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
+var bb={}; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
+var bd={"bri":254,"sat":255,on:true}; 
 if(data.features.length) {
 var severity=["Minor","Moderate","Severe","Extreme"], max=0  //get the highest warnlevel
 data.features.forEach(function(item){ item=item.properties
@@ -15,15 +16,15 @@ max=Math.max(max,severity.indexOf(item.SEVERITY))
  })
 
 var color=[10920,5481,0,0]
-var bd={"bri":254,"sat":255,on:true}; bd.hue=color[max]  //={on:true}  //"bri":127
+bd.hue=color[max]  //={on:true}  //"bri":127
 
-if(!isNaN(qs) && max >= qs-1+dt) {showLights(path.match("sensors/")?{status:max+1}:bd); dt++ }  //warnlev
-  } else if(dt) {
- //showLights(path.match("sensors/")?{status:0}:{on:false}); 
- dt=0}
+if(!isNaN(qs) && max >= qs-1) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
+  } else {showLights(path.match("sensors/")?{status:0}:{on:false}); }  //bd.hue=21840;  bd
 })
 
-function showLights(bd) { bb=bd
+function showLights(bd) { 
+if(JSON.stringify(bd)==JSON.stringify(bb)) return;
+bb=bd
 var xhr = new XMLHttpRequest();
 xhr.open("PUT", bridge+"/"+path)
 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -60,6 +61,6 @@ setTimeout(function(){ if(!(localStorage||{}).bridge) bulb(bb); else  // wo/with
  fetch(bridge+"/lights/"+(opt.light*1||1)).then(function(response){response.json().then(function(data){ bulb(data.state) })})
  }, 1000)
 })
-function bulb(bd) {document.querySelector("input[alt=search]").style.backgroundColor="hsl("+bd.hue/182+","+bd.sat/2.55+"%,"+Math.min((bd.on?bd.bri:1)/2.55,78)+"%)"}
+function bulb(bd) {document.querySelector("input[alt=search]").style.backgroundColor="hsl("+(bd.hue||0)/182+","+(bd.sat||0)/2.55+"%,"+Math.min((bd.on?bd.bri:1)/2.55,78)+"%)"}
 
 })();
