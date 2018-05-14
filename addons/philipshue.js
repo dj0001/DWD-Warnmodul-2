@@ -63,6 +63,6 @@ setTimeout(function(){ if(!(localStorage||{}).bridge) bulb(bb); else  // wo/with
 })
 function bulb(bd) { var l = (2 - bd.sat/255) * bd.bri/255 / 2; var s = l<1 ? bd.sat*bd.bri/(l<0.5 ? l*2 : 2-l*2) : 0; if (isNaN(s)) s = 0; 
  document.querySelector("input[alt=search]").style.transition = (bd.transition||4)/10+"s"
- document.querySelector("input[alt=search]").style.backgroundColor=bd.on?"hsl("+(bd.hue||0)/182+","+s*100+"%,"+l*100+"%)":"hsl(0,0%,50%)"}
+ document.querySelector("input[alt=search]").style.backgroundColor=bd.on?"hsl("+(bd.hue||0)/182+","+s*100+"%,"+(l||0)*100+"%)":"hsl(0,0%,50%)"}
 
 })();
