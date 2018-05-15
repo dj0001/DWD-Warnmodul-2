@@ -39,11 +39,11 @@ bridge=((bridge.match(/https?:/))?'':'http://')+bridge
 }
 
 //if(opt.reset) delete localStorage.bridge  //?&reset=1
-if ((localStorage||{}).bridge) bridge=localStorage.bridge; 
-else {changebri("addon successfully installed\n"); }  // ?4 disable
+try {if ((localStorage||{}).bridge) bridge=localStorage.bridge; else changebri("addon successfully installed\n")}  // ?4 disable
+catch(e) {changebri("addon successfully installed\n")}  //Edge
  if(!bridge.match("/api")) bridge+="/api/dev"
  if(self.fetch) fetch(bridge+"/config",{method:"GET"}).then(function(response)  //"http://localhost:8000/api//config"
-  {response.json().then(function(data){if(data.whitelist) localStorage.bridge=bridge; else {
+  {response.json().then(function(data){if(data.whitelist) {localStorage.bridge=bridge;if(!opt.light) changelight()} else {
    alert("unauthorised user\npress link button"); bridge=bridge.replace(/\/api.*/,'/api')
    fetch(bridge,{method:"POST",body:'{"devicetype":""}',headers:{'Content-Type':'application/json'}}).then(function(response)
    {response.json().then(function(data){if(data[0].success) localStorage.bridge=bridge+="/"+data[0].success.username})} ) }
@@ -64,5 +64,11 @@ setTimeout(function(){ if(!(localStorage||{}).bridge) bulb(bb); else  // wo/with
 function bulb(bd) { var l = (2 - bd.sat/255) * bd.bri/255 / 2; var s = l<1 ? bd.sat*bd.bri/(l<0.5 ? l*2 : 2-l*2) : 0; if (isNaN(s)) s = 0; 
  document.querySelector("input[alt=search]").style.transition = (bd.transition||4)/10+"s"
  document.querySelector("input[alt=search]").style.backgroundColor=bd.on?"hsl("+(bd.hue||0)/182+","+s*100+"%,"+(l||0)*100+"%)":"hsl(0,0%,50%)"}
+
+function changelight(){ var hd=""
+fetch(bridge+"/lights").then(function(response){response.json().then(function(data){ for(var key in data) {hd+=key+"="+data[key].name+"\n"}
+ var tmp=prompt("select light\n"+hd,"0")||"/0"; path=isNaN(tmp)? "groups"+tmp+"/action" :"lights/"+tmp+"/state"; if(!isNaN(tmp)) opt.light=tmp  // /3 group
+ })})
+}
 
 })();
