@@ -8,6 +8,7 @@ var path=opt.light  //URL parameter ?&light=1
 if(!path) path="groups/0/action"; else path=isNaN(path)? "sensors"+path+"/state" :"lights/"+path+"/state"  //?&light=/3 sensor
 
 var bb={}; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
+if(seenlayer._data && seenlayer._data.features.length) data=seenlayer._data  //works, but delayed
 var bd={"bri":254,"sat":255,on:true};  //"bri":127 
 if(data.features.length) {
 var severity=["Minor","Moderate","Severe","Extreme"], max=0  //get the highest warnlevel
