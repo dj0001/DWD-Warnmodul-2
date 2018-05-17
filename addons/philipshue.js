@@ -17,7 +17,7 @@ max=Math.max(max,severity.indexOf(item.SEVERITY))
  })
 
 var color=[10920,5481,0,60060]
-bd.hue=color[max]  //={on:true}
+bd.hue=color[max]  //;bd.alert="lselect"
 
 if(!isNaN(qs) && max >= qs-1) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
   } else {showLights(path.match("sensors/")?{status:0}:{on:false}); }  //bd.hue=21840;  bd
@@ -64,12 +64,14 @@ setTimeout(function(){ if(!(localStorage||{}).bridge) bulb(bb); else  // wo/with
 })
 function bulb(bd) { var l = (2 - bd.sat/255) * bd.bri/255 / 2; var s = l<1 ? bd.sat*bd.bri/(l<0.5 ? l*2 : 2-l*2) : 0; if (isNaN(s)) s = 0; 
  document.querySelector("input[alt=search]").style.transition = (bd.transition||4)/10+"s"
- document.querySelector("input[alt=search]").style.backgroundColor=bd.on?"hsl("+(bd.hue||0)/182+","+s*100+"%,"+(l||0)*100+"%)":"hsl(0,0%,50%)"}
+ document.querySelector("input[alt=search]").style.backgroundColor=bd.on?"hsl("+(bd.hue||0)/182+","+s*100+"%,"+(l||0)*100+"%)":"hsl(0,0%,50%)"
+ if(bd.alert=="lselect") blink(30) }
 
 function changelight(){ var hd=""
 fetch(bridge+"/lights").then(function(response){response.json().then(function(data){ for(var key in data) {hd+=key+"="+data[key].name+"\n"}
  var tmp=prompt("select light\n"+hd,"0")||"/0"; path=isNaN(tmp)? "groups"+tmp+"/action" :"lights/"+tmp+"/state"; if(!isNaN(tmp)) opt.light=tmp  // /3 group
  })})
 }
+function blink(n) {bb.alert="select";bulb(document.querySelector("input[alt=search]").style.backgroundColor=="rgb(128, 128, 128)"?bb:{on:false});n--;if(n) setTimeout(function(){blink(n)},500)}
 
 })();
