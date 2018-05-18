@@ -19,7 +19,7 @@ max=Math.max(max,severity.indexOf(item.SEVERITY))
 var color=[10920,5481,0,60060]
 bd.hue={UV:54600,HEAT:49140}[data.features[0].properties.EC_GROUP]|| color[max]  //;bd.alert="lselect"
 
-if(!isNaN(qs) && max >= qs-1) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
+if(!isNaN(qs) && max >= qs-1 ||isNaN(qs)) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
   } else {showLights(path.match("sensors/")?{status:0}:{on:false}); }  //bd.hue=21840;  bd  //{"sat":0,on:true,"bri":254}
 })
 
