@@ -20,7 +20,9 @@ var color=[60,30,0,330]
 bd.hue=182*({UV:300,HEAT:270}[data.features[0].properties.EC_GROUP]|| color[max])  //;bd.alert="lselect"
 
 if(!isNaN(qs) && max >= qs-1 ||isNaN(qs) && ec) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
-  } else {showLights(path.match("sensors/")?{status:0}:{on:false}); }  //bd.hue=21840;  bd  //{"sat":0,on:true,"bri":254}
+  } else {
+  bd.on=false  //edit here nowarn; off bd.on=false; green bd.hue=21840; white bd.sat=0
+  showLights(path.match("sensors/")?{status:0}:bd); }
 })
 
 function showLights(bd) { 
