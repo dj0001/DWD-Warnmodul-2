@@ -11,15 +11,15 @@ var bb={}; warnlayer._marker.on('move', function(e){ var data=warnlayer._data
 if(seenlayer._data && seenlayer._data.features.length) data=seenlayer._data  //works, but delayed
 var bd={"bri":254,"sat":255,on:true};  //"bri":127 
 if(data.features.length) {
-var severity=["Minor","Moderate","Severe","Extreme"], max=0  //get the highest warnlevel
+var severity=["Minor","Moderate","Severe","Extreme"], max=0, ec=false  //get the highest warnlevel
 data.features.forEach(function(item){ item=item.properties
-max=Math.max(max,severity.indexOf(item.SEVERITY))
+max=Math.max(max,severity.indexOf(item.SEVERITY)); ec=ec||item.EC_GROUP.match(qs)  //?THUNDERSTORM
  })
 
-var color=[10920,5481,0,60060]
-bd.hue={UV:54600,HEAT:49140}[data.features[0].properties.EC_GROUP]|| color[max]  //;bd.alert="lselect"
+var color=[60,30,0,330]
+bd.hue=182*({UV:300,HEAT:270}[data.features[0].properties.EC_GROUP]|| color[max])  //;bd.alert="lselect"
 
-if(!isNaN(qs) && max >= qs-1 ||isNaN(qs)) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
+if(!isNaN(qs) && max >= qs-1 ||isNaN(qs) && ec) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
   } else {showLights(path.match("sensors/")?{status:0}:{on:false}); }  //bd.hue=21840;  bd  //{"sat":0,on:true,"bri":254}
 })
 
