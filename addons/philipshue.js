@@ -17,7 +17,7 @@ max=Math.max(max,severity.indexOf(item.SEVERITY)); ec=ec||item.EC_GROUP.match(qs
  })
 
 var color=[60,30,0,330]
-bd.hue=182*({UV:300,HEAT:270}[data.features[0].properties.EC_GROUP]|| color[max])  //;bd.alert="lselect"
+if (max<2) bd.hue=182*({UV:300,HEAT:270}[data.features[0].properties.EC_GROUP]|| color[max]); else bd.hue=182*color[max]  //;bd.alert="lselect"
 
 if(!isNaN(qs) && max >= qs-1 ||isNaN(qs) && ec) {showLights(path.match("sensors/")?{status:max+1}:bd) }  //warnlev
   } else {
@@ -45,15 +45,15 @@ bridge=((bridge.match(/https?:/))?'':'http://')+bridge
 try {if ((localStorage||{}).bridge) bridge=localStorage.bridge; else changebri("addon successfully installed\n")}  // ?4 disable
 catch(e) {changebri("addon successfully installed\n")}  //Edge
  if(!bridge.match("/api")) bridge+="/api/dev"
- if(self.fetch) fetch(bridge+"/config",{method:"GET"}).then(function(response)  //"http://localhost:8000/api//config"
+ if (bridge.match("///"))  //search on portal "/api/olddeveloper"
+ fetch("https://www.meethue.com/api/nupnp").then(function(response){response.json().then(function(data){if(data[0]) bridge=bridge.replace("//","//"+data[0].internalipaddress);changebri("found\n")})})
+ ; else if(self.fetch) fetch(bridge+"/config",{method:"GET"}).then(function(response)  //"http://localhost:8000/api//config"
   {response.json().then(function(data){if(data.whitelist) {localStorage.bridge=bridge;if(!opt.light) changelight()} else {
    alert("unauthorised user\npress link button"); bridge=bridge.replace(/\/api.*/,'/api')
    fetch(bridge,{method:"POST",body:'{"devicetype":""}',headers:{'Content-Type':'application/json'}}).then(function(response)
    {response.json().then(function(data){if(data[0].success) localStorage.bridge=bridge+="/"+data[0].success.username})} ) }
   })} )
   .catch(function(err){changebri("bridge not found\n"); delete localStorage.bridge
-  if(opt.nupn)  //search on portal
-   fetch("https://www.meethue.com/api/nupnp").then(function(response){response.json().then(function(data){if(data[0]) bridge=data[0].internalipaddress;changebri("found\n")})})
   })
 //}
 console.log(bridge)
