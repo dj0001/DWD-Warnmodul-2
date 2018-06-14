@@ -35,6 +35,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 18.04. add Pollenflug    
 24.04. add [configurator](https://dj0001.github.io/DWD-Warnmodul-2/addons/config.html)    
 03.05. add [philipshue](https://developers.meethue.com/content/dwd-warnmodul-addon) addon  
+14.06. add [warnlayer](addons/noaa.js) USA addon  
 todo: waiting for "periodic background sync" (chrome) or push notifications (DWD)
 
 ## License
