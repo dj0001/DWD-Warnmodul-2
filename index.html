@@ -133,7 +133,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	}; overLayers["<span title='Pollenflug'>"+pollenlayer.options.layers+"</span>"] = pollenlayer
 
 	// Layercontrol-Element erstellen und hinzufügen
-    L.control.layers(baseLayers, overLayers).addTo(karte);  //, {autoZIndex:false})
+    var lc = L.control.layers(baseLayers, overLayers).addTo(karte);  //, {autoZIndex:false})
 
 	// Demo-Marker mit Popup hinzufügen
 	//var marker = L.marker([50.099444, 8.770833]).addTo(karte);
