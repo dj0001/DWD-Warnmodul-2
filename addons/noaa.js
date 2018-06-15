@@ -17,7 +17,7 @@ L.TileLayer.BetterWMS2 = L.TileLayer.WMS.extend({
 
  showGetFeatureInfoJson: function (evt) {
  this._marker.closePopup();this._marker.unbindPopup(); this._marker.setLatLng(evt.latlng)
- content='<iframe src="https://dj0001.github.io/DWD/new/noaa/index_withoutmapUSA.html?'+evt.latlng.lat+','+evt.latlng.lng+'" style="border:none" height="180" width="200"></iframe>'  //small=false
+ content='<iframe src="https://dj0001.github.io/DWD/new/noaa/index_withoutmapUSA.html?'+evt.latlng.lat+','+evt.latlng.lng+'" style="border:none" height="180" width="210"></iframe>'  //small=false
  this._marker.bindPopup(content,{ maxWidth: 800}).openPopup();
  }
 });
@@ -32,7 +32,7 @@ var noaalayer = L.tileLayer.betterWms2("https://idpgis.ncep.noaa.gov/arcgis/rest
  dpi: 96,
  bboxSR: 102100,
  imageSR: 102100,  //?
-attribution: '<a href="https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer/legend">NOAA</a>'
+ attribution: '<a href="https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer/legend">NOAA</a>'
 });
 
  lc.addOverlay(noaalayer,"<span title='USA'>NOAA</span>")
