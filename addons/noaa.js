@@ -26,7 +26,7 @@ L.TileLayer.BetterWMS2 = L.TileLayer.WMS.extend({
         params = {
           f: 'json',  //layers: 'show:0,1',
           geometry: latlng.lng+','+latlng.lat,
-          tolerance: 8,
+          tolerance: 4,  //8
           mapExtent: this._map.getBounds().toBBoxString(),    //bbox
           imageDisplay: size.x+','+size.y+',96',  //922,523,96?
           returnGeometry: false
