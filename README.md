@@ -26,7 +26,7 @@ Demo https://dj0001.github.io/DWD-Warnmodul-2/?ort=Augsburg
 30.01. without global variables    
 31.01. add parameter ?0 no-geolocation, ?1 watch-geo    
 16.02. add more locations [beta](https://dj0001.github.io/DWD/new/index_multi.html)    
-18.02. without [map](https://dj0001.github.io/DWD/new/index_womap.html) ,22.05. or [minimal](https://github.com/dj0001/DWD/blob/gh-pages/new/dwd.bat) [beta](https://dj0001.github.io/DWD/new/dwd.bat) ,12.06. without [map](https://dj0001.github.io/DWD/new/noaa/index_withoutmapUSA.html) USA    
+18.02. without [map](https://dj0001.github.io/DWD/new/index_womap.html) ,22.05. or [minimal](https://github.com/dj0001/DWD/blob/gh-pages/new/dwd.bat) [beta](https://dj0001.github.io/DWD/new/dwd.bat) ,21.06. without [map](https://dj0001.github.io/DWD/new/noaa/index_withoutmapUSA.html) (DWD,NWS,Meteoalarm)    
 01.03. add Binnenseen    
 13.03. add alternative [themes](https://github.com/dj0001/DWD/tree/gh-pages/new/themes)    
 17.03. full configurable background    
