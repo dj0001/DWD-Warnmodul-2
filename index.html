@@ -103,8 +103,8 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 	var baseLayers = {
 			"OpenStreetMap": osmlayer.addTo(karte)
 	};
-		var satlayer = L.tileLayer.wms("https://maps.dwd.de/geoserver/dwd/wms/", {
-		layers: 'dwd:SAT_EU_central_RGB_cloud',  //GefuehlteTemp
+		var satlayer = L.tileLayer.wms("https://maps.dwd.de/geoproxy/service/", {
+		layers: 'SAT_EU_central_RGB_cloud',  //GefuehlteTemp
 		format: 'image/png',
 		styles: '',
 		transparent: true,
@@ -118,7 +118,7 @@ Anregungen zur Nutzung oder beispielhafte Weiterentwicklungen nehmen wir gerne u
 		transparent: true,
 		opacity: 0.6
 	});
-		var pollenlayer = L.tileLayer.wms("https://maps.dwd.de/geoserver/dwd/wms/", {  //
+		var pollenlayer = L.tileLayer.wms("https://maps.dwd.de/geoproxy/service/", {  //
 		layers: 'Pollenflug_'+(new Date().getMonth()>=4?'Graeser':'Birke'),
 		format: 'image/png',
 		styles: '',
