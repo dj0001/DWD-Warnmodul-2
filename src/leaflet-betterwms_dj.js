@@ -95,7 +95,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
         content += "<div style='position: relative;'><table style='"  //background: no-repeat 12px 75%/32px url(\"icons/"+ec+".png\")
         if(!newstyle) content += ", no-repeat left/contain url(\"icons/warn.png\"), linear-gradient(to right, "+color[item.SEVERITY]+" 54px,transparent 54px)"
         content += "; border-spacing:0px'>"
-        + "<tr><td>Ereignis :</td><td><b><a style='text-decoration:none' href='?" + item.EC_GROUP + "'>" + item.EVENT.replace("RMATION","") + "</a></b>"  //.EVENT
+        + "<tr><td>Ereignis&nbsp;:</td><td><b><a style='text-decoration:none' href='?" + item.EC_GROUP + "'>" + item.EVENT.replace("RMATION","") + "</a></b>"  //.EVENT
         //+ (item.ALTITUDE?" <sup>&uarr;"+(0.3048*item.ALTITUDE).toFixed()+"m</sup>":"")  //add ALTITUDE to propertyName
         + "</td></tr><tr><td></td><td"+(Date.now()-o<0?" style='color:#808080'":"")+">" + onset + "</td></tr>"  //Beginn:
         + "<tr><td></td><td"+(Date.now()-e>0?" style='color:#808080'":"")+">" + (item.EXPIRES?end:item.AREADESC) + "</td></tr></table>" //"&nbsp;"
@@ -106,7 +106,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     content += "<a target='dwd' href='https://www.dwd.de/warnungen'>dwd.de</a> "+new Date(data.features[0].properties.SENT).toLocaleTimeString('de',{hour:"2-digit",minute:"2-digit"});
     if((Date.now()-new Date(data.features[0].properties.SENT))/3.6e6>48) content += " not up to date, try <a href='?7'>Landkreise</a>"  //
 
-    this._marker.bindPopup(content,{ maxWidth: 800}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
+    this._marker.bindPopup(content,{ maxWidth: 400}).openPopup();  //L.popup({ maxWidth: 800}).setLatLng(latlng).setContent(content).openOn(this._map);
   }
 });
 
